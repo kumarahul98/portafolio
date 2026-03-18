@@ -43,7 +43,7 @@ function VideoCard({ video, id }: { video: VideoEntry; id: string | null }) {
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-center gap-3 mb-3">
           <span className="font-pixel text-app-muted">
-            {new Date(video.date).toLocaleDateString('en-US', {
+            {new Date(video.date + 'T12:00:00').toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'short',
             })}
