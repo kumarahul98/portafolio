@@ -16,14 +16,14 @@ export default function App() {
   const { dark, toggle } = useTheme()
 
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>
+    let timer: ReturnType<typeof setTimeout> | undefined
     const onResize = () => {
-      clearTimeout(timer)
+      if (timer) clearTimeout(timer)
       timer = setTimeout(() => ScrollTrigger.refresh(), 150)
     }
     window.addEventListener('resize', onResize)
     return () => {
-      clearTimeout(timer)
+      if (timer) clearTimeout(timer)
       window.removeEventListener('resize', onResize)
     }
   }, [])

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-// @ts-ignore
 import myImage from '../../images/IMG_3002.jpg'
 
 export default function Hero() {

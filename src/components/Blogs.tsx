@@ -1,33 +1,20 @@
 import type { BlogEntry } from '../types/content'
 import { useReveal } from '../hooks/useReveal'
-import { useState } from 'react'
+import { usePagination } from '../hooks/usePagination'
+import SkeletonCard from './ui/SkeletonCard'
 
 interface Props {
   data: BlogEntry[]
   loading: boolean
 }
 
-function SkeletonCard() {
-  return (
-    <div className="bg-[var(--c-card)] border border-[var(--c-border)] p-6 animate-pulse">
-      <div className="h-3 bg-[var(--c-border)] rounded mb-5 w-1/3" />
-      <div className="h-6 bg-[var(--c-border)] rounded mb-4 w-3/4" />
-      <div className="h-4 bg-[var(--c-border)] rounded mb-2" />
-      <div className="h-4 bg-[var(--c-border)] rounded w-2/3" />
-    </div>
-  )
-}
-
 export default function Blogs({ data, loading }: Props) {
   const sectionRef = useReveal<HTMLElement>([data])
-  const [visibleCount, setVisibleCount] = useState(6)
-
   const sorted = [...data].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 
-  const visibleBlogs = sorted.slice(0, visibleCount)
-  const hasMore = visibleCount < sorted.length
+  const { visibleItems: visibleBlogs, hasMore, loadMore } = usePagination(sorted, 6, 6)
 
   return (
     <section
@@ -79,7 +66,7 @@ export default function Blogs({ data, loading }: Props) {
             {hasMore && (
               <div className="mt-12 flex justify-center">
                 <button
-                  onClick={() => setVisibleCount((prev) => prev + 6)}
+                  onClick={loadMore}
                   className="px-6 py-3 bg-[var(--c-card)] border border-[var(--c-border)] text-[var(--c-heading)] font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
                 >
                   VIEW MORE

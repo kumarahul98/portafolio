@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import Icon from './ui/Icon'
 interface Props {
   dark: boolean
   onToggleTheme: () => void
@@ -30,13 +31,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
       <div className="relative z-10 max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="#hero" onClick={close} className="flex items-center gap-2 text-brand">
-          <svg width="36" height="42" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M12 2C12 2 18 7 18 14H6C6 7 12 2 12 2z" fill="currentColor" opacity="0.9"/>
-            <rect x="8" y="14" width="8" height="7" rx="1" fill="currentColor" opacity="0.7"/>
-            <path d="M8 14l-3 4h3" fill="currentColor" opacity="0.5"/>
-            <path d="M16 14l3 4h-3" fill="currentColor" opacity="0.5"/>
-            <circle cx="12" cy="10" r="2" fill="white"/>
-          </svg>
+          <Icon name="logo" />
           <span className="font-anton text-3xl tracking-wide leading-none">RK.</span>
         </a>
 

@@ -1,13 +1,10 @@
 import { PROJECTS } from '../data/projects'
 import { useReveal } from '../hooks/useReveal'
-import { useState } from 'react'
+import { usePagination } from '../hooks/usePagination'
 
 export default function Projects() {
   const sectionRef = useReveal<HTMLElement>()
-  const [visibleCount, setVisibleCount] = useState(4)
-
-  const visibleProjects = PROJECTS.slice(0, visibleCount)
-  const hasMore = visibleCount < PROJECTS.length
+  const { visibleItems: visibleProjects, hasMore, loadMore } = usePagination(PROJECTS, 4, 4)
 
   return (
     <section
@@ -50,7 +47,7 @@ export default function Projects() {
           {hasMore && (
             <div className="mt-12 flex justify-center">
               <button
-                onClick={() => setVisibleCount((prev) => prev + 4)}
+                onClick={loadMore}
                 className="px-6 py-3 bg-[var(--c-card)] border border-[var(--c-border)] text-[var(--c-heading)] font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
               >
                 VIEW MORE
