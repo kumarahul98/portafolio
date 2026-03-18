@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* brand (fixed across themes) */
+    --brand: #5C8DF2;
+    --canvas-glow: rgba(92, 141, 242, 0.1);
+
+    /* light theme */
+    --c-bg: #ffffff;
+    --c-bg-subtle: #F9F9FA;
+    --c-heading: #162C5A;
+    --c-body: #7C7C80;
+    --c-muted: #9CA3B0;
+    --c-border: rgba(156, 163, 176, 0.3);
+    --c-card: #ffffff;
+    --c-nav-bg: rgba(249, 249, 250, 0.65);
+  }
+
+  html.dark {
+    --c-bg: #0c1a30;
+    --c-bg-subtle: #0f2040;
+    --c-heading: #ffffff;
+    --c-body: #9CA3B0;
+    --c-muted: #7C7C80;
+    --c-border: rgba(255, 255, 255, 0.1);
+    --c-card: rgba(92, 141, 242, 0.04);
+    --c-nav-bg: rgba(12, 26, 48, 0.65);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--c-bg);
+    color: var(--c-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer utilities {
+  .font-pixel {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .reveal {
+    opacity: 1;
+  }
+}
