@@ -77,12 +77,12 @@ export default function About() {
 
         {/* Experience */}
         <div className="mb-20">
-          <h3 className="reveal font-pixel text-[#9CA3B0] mb-10">Experience</h3>
+          <h3 className="reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10">Experience</h3>
           <div className="flex flex-col gap-12">
             {EXPERIENCE.map((job) => (
               <div key={job.company} className="reveal flex flex-col md:flex-row gap-4 md:gap-8">
                 <div className="md:w-56 shrink-0">
-                  <p className="font-pixel text-brand leading-relaxed">{job.period}</p>
+                  <p className="font-pixel text-base md:text-lg text-brand leading-relaxed">{job.period}</p>
                 </div>
                 <div className="flex-1 border-l-2 border-brand pl-6">
                   <p className="font-anton text-2xl md:text-3xl text-white tracking-tight mb-1">{job.role}</p>
@@ -102,11 +102,11 @@ export default function About() {
 
         {/* Skills */}
         <div className="mb-20">
-          <h3 className="reveal font-pixel text-[#9CA3B0] mb-10">Skills</h3>
+          <h3 className="reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10">Skills</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {SKILLS.map(({ category, items }) => (
               <div key={category} className="reveal">
-                <p className="font-pixel text-brand mb-4">{category}</p>
+                <p className="font-pixel text-base md:text-lg text-brand mb-4">{category}</p>
                 <div className="flex flex-wrap gap-2">
                   {items.map((skill) => (
                     <span
@@ -124,14 +124,14 @@ export default function About() {
 
         {/* Certifications */}
         <div>
-          <h3 className="reveal font-pixel text-[#9CA3B0] mb-10">Certifications</h3>
+          <h3 className="reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10">Certifications</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {CERTIFICATIONS.map((cert) => (
               <div
                 key={cert.abbr}
                 className="reveal bg-white/5 border border-white/10 p-6"
               >
-                <span className="font-pixel text-brand block mb-4">{cert.abbr}</span>
+                <span className="font-pixel text-base md:text-lg text-brand block mb-4">{cert.abbr}</span>
                 <p className="text-base md:text-lg font-medium text-white leading-snug mb-2">{cert.name}</p>
                 {cert.issued && (
                   <p className="text-sm md:text-base text-[#9CA3B0]">

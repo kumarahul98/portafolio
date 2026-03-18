@@ -23,16 +23,21 @@ export default function Nav({ dark, onToggleTheme }: Props) {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-[var(--c-nav-bg)] border-b border-[var(--c-border)]"
+      className="fixed top-0 inset-x-0 z-50 backdrop-blur-md"
     >
-      <div className="max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between">
+      {/* Nav background: solid on top, fades to transparent at the bottom edge */}
+      <div className="absolute inset-0 pointer-events-none z-0" style={{ background: 'linear-gradient(to bottom, var(--c-nav-bg) 85%, transparent 100%)' }} />
+      <div className="relative z-10 max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a
-          href="#hero"
-          onClick={close}
-          className="font-anton text-3xl text-brand tracking-wide leading-none"
-        >
-          RK.
+        <a href="#hero" onClick={close} className="flex items-center gap-2 text-brand">
+          <svg width="36" height="42" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2C12 2 18 7 18 14H6C6 7 12 2 12 2z" fill="currentColor" opacity="0.9"/>
+            <rect x="8" y="14" width="8" height="7" rx="1" fill="currentColor" opacity="0.7"/>
+            <path d="M8 14l-3 4h3" fill="currentColor" opacity="0.5"/>
+            <path d="M16 14l3 4h-3" fill="currentColor" opacity="0.5"/>
+            <circle cx="12" cy="10" r="2" fill="white"/>
+          </svg>
+          <span className="font-anton text-3xl tracking-wide leading-none">RK.</span>
         </a>
 
         {/* Desktop links + theme toggle */}
@@ -42,7 +47,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
               <li key={href}>
                 <a
                   href={href}
-                  className="text-base text-[var(--c-body)] hover:text-brand transition-colors duration-200"
+                  className="text-base text-[var(--c-heading)] hover:text-brand transition-colors duration-200"
                 >
                   {label}
                 </a>
@@ -54,7 +59,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
           <button
             onClick={onToggleTheme}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="w-9 h-9 flex items-center justify-center text-[var(--c-muted)] hover:text-brand transition-colors duration-200"
+            className="w-9 h-9 flex items-center justify-center text-[var(--c-heading)] hover:text-brand transition-colors duration-200"
           >
             {dark ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -81,7 +86,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
           <button
             onClick={onToggleTheme}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="w-9 h-9 flex items-center justify-center text-[var(--c-muted)] hover:text-brand transition-colors duration-200"
+            className="w-9 h-9 flex items-center justify-center text-[var(--c-heading)] hover:text-brand transition-colors duration-200"
           >
             {dark ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 // @ts-ignore
-import myImage from '../../images/IMG_1551.PNG'
+import myImage from '../../images/IMG_3002.jpg'
 
 export default function Hero() {
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -11,33 +11,22 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(headingRef.current, {
-        y: 80,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-      })
-      gsap.from(labelRef.current, {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.2,
-        ease: 'power3.out',
-      })
-      gsap.from(bioRef.current, {
-        opacity: 0,
-        duration: 1,
-        delay: 0.5,
-        ease: 'power2.out',
-      })
-      gsap.from(btnsRef.current!.children, {
-        opacity: 0,
-        y: 20,
-        stagger: 0.15,
-        delay: 0.7,
-        duration: 0.6,
-        ease: 'power2.out',
-      })
+      gsap.fromTo(headingRef.current,
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }
+      )
+      gsap.fromTo(labelRef.current,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: 'power3.out' }
+      )
+      gsap.fromTo(bioRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1, delay: 0.5, ease: 'power2.out' }
+      )
+      gsap.fromTo(btnsRef.current!.children,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, stagger: 0.15, delay: 0.7, duration: 0.6, ease: 'power2.out' }
+      )
     })
     return () => ctx.revert()
   }, [])
@@ -45,29 +34,50 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative z-10 min-h-screen flex flex-col justify-center px-2 py-16 md:px-4 md:py-24 lg:px-6 lg:py-32 max-w-7xl mx-auto w-full"
+      className="relative z-10 w-full"
     >
-      <div className="flex flex-col md:flex-row items-center justify-between gap-12 w-full">
-        <div className="flex flex-col flex-1">
+      <div className="relative w-full h-screen min-h-[600px] overflow-hidden flex flex-col justify-center group">
+
+        {/* Dark base */}
+        <div className="absolute inset-0 bg-[#0a0a0a] z-0" />
+
+        {/* Hero Image */}
+        <img
+          src={myImage}
+          alt="Rahul Kumar"
+          className="absolute inset-0 w-full h-full object-cover object-center z-0 -translate-x-[4%] transition-transform duration-1000 group-hover:scale-105"
+        />
+
+        {/* Left fade — wide and soft */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#0a0a0a] from-30% via-[#0a0a0a]/70 via-55% to-transparent" />
+
+        {/* Right fade */}
+        <div className="absolute inset-y-0 right-0 w-1/3 z-0 bg-gradient-to-l from-[#0a0a0a] to-transparent" />
+
+        {/* Bottom fade into next section */}
+        <div className="absolute inset-x-0 bottom-0 h-40 z-0 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+
+        {/* Content — pt-24 clears the fixed nav */}
+        <div className="relative z-10 flex flex-col items-start max-w-2xl px-8 md:px-16 pt-24 pb-16">
           <span
             ref={labelRef}
-            className="font-pixel text-[var(--c-muted)] mb-8 block"
+            className="font-pixel text-[10px] sm:text-xs text-brand tracking-widest uppercase mb-6 opacity-90"
           >
             Principal Solutions Architect
           </span>
 
           <h1
             ref={headingRef}
-            className="font-anton text-6xl md:text-8xl lg:text-[10rem] leading-none tracking-tight mb-8 text-[var(--c-heading)]"
+            className="font-anton text-6xl md:text-7xl lg:text-[7.5rem] leading-[0.95] tracking-tight mb-8 text-white"
           >
-            <span className="text-brand">RAHUL</span>
+            RAHUL
             <br />
-            KUMAR
+            <span className="text-white/80">KUMAR</span>
           </h1>
 
           <p
             ref={bioRef}
-            className="text-[var(--c-body)] text-lg md:text-xl lg:text-2xl max-w-2xl mb-12 leading-relaxed"
+            className="text-white/70 text-base md:text-lg max-w-md mb-12 leading-relaxed font-light"
           >
             Builds and ships scalable, cloud-native solutions on AWS. Work spans
             serverless architecture, DevOps, full-stack development, and GenAI.
@@ -77,25 +87,17 @@ export default function Hero() {
           <div ref={btnsRef} className="flex flex-wrap gap-4">
             <a
               href="#projects"
-              className="bg-brand hover:bg-brand-dark text-white font-medium text-base px-8 py-4 transition-colors duration-200"
+              className="bg-brand hover:brightness-110 text-white font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 shadow-lg shadow-brand/30 hover:-translate-y-0.5"
             >
               View Projects ↓
             </a>
             <a
               href="#contact"
-              className="border border-brand text-brand hover:bg-brand hover:text-white font-medium text-base px-8 py-4 transition-colors duration-200"
+              className="border border-white/25 text-white hover:bg-white hover:text-black font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 backdrop-blur-sm bg-white/5 hover:-translate-y-0.5"
             >
               Get in Touch
             </a>
           </div>
-        </div>
-
-        <div className="hidden md:flex flex-1 justify-end items-center mr-8">
-          <img 
-            src={myImage} 
-            alt="Rahul Kumar" 
-            className="w-full max-w-md lg:max-w-lg object-cover rounded-[2rem] shadow-2xl hover:scale-105 transition-transform duration-500 reveal"
-          />
         </div>
       </div>
     </section>

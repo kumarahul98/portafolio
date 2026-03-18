@@ -1,5 +1,6 @@
 import type { VideoEntry } from '../types/content'
 import { useReveal } from '../hooks/useReveal'
+import { useState } from 'react'
 
 interface Props {
   data: VideoEntry[]
@@ -26,10 +27,14 @@ function SkeletonCard() {
 
 export default function Videos({ data, loading }: Props) {
   const sectionRef = useReveal<HTMLElement>([data])
+  const [visibleCount, setVisibleCount] = useState(6)
 
   const sorted = [...data].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
+
+  const visibleVideos = sorted.slice(0, visibleCount)
+  const hasMore = visibleCount < sorted.length
 
   return (
     <section
@@ -49,9 +54,10 @@ export default function Videos({ data, loading }: Props) {
         ) : sorted.length === 0 ? (
           <p className="text-base text-[var(--c-muted)]">No videos yet — check back soon.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sorted.map((video) => {
-              const id = getYouTubeId(video.url)
+          <div className="flex flex-col">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {visibleVideos.map((video) => {
+                const id = getYouTubeId(video.url)
               return (
                 <a
                   key={video.url + video.title}
@@ -62,7 +68,7 @@ export default function Videos({ data, loading }: Props) {
                 >
                   {id ? (
                     <img
-                      src={`https://img.youtube.com/vi/${id}/mqdefault.jpg`}
+                      src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`}
                       alt={video.title}
                       className="w-full aspect-video object-cover"
                       onError={(e) => {
@@ -105,6 +111,17 @@ export default function Videos({ data, loading }: Props) {
                 </a>
               )
             })}
+            </div>
+            {hasMore && (
+              <div className="mt-12 flex justify-center">
+                <button
+                  onClick={() => setVisibleCount((prev) => prev + 6)}
+                  className="px-6 py-3 bg-[var(--c-card)] border border-[var(--c-border)] text-[var(--c-heading)] font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
+                >
+                  VIEW MORE
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

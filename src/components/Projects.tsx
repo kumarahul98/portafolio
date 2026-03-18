@@ -1,8 +1,13 @@
 import { PROJECTS } from '../data/projects'
 import { useReveal } from '../hooks/useReveal'
+import { useState } from 'react'
 
 export default function Projects() {
   const sectionRef = useReveal<HTMLElement>()
+  const [visibleCount, setVisibleCount] = useState(4)
+
+  const visibleProjects = PROJECTS.slice(0, visibleCount)
+  const hasMore = visibleCount < PROJECTS.length
 
   return (
     <section
@@ -15,8 +20,9 @@ export default function Projects() {
           PROJECTS
         </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {PROJECTS.map((project) => (
+        <div className="flex flex-col">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {visibleProjects.map((project) => (
             <div
               key={project.title}
               className="reveal bg-[var(--c-card)] border border-[var(--c-border)] shadow-sm p-8 md:p-10 flex flex-col"
@@ -40,6 +46,17 @@ export default function Projects() {
               </div>
             </div>
           ))}
+          </div>
+          {hasMore && (
+            <div className="mt-12 flex justify-center">
+              <button
+                onClick={() => setVisibleCount((prev) => prev + 4)}
+                className="px-6 py-3 bg-[var(--c-card)] border border-[var(--c-border)] text-[var(--c-heading)] font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
+              >
+                VIEW MORE
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
