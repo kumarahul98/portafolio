@@ -29,7 +29,7 @@ export default function App() {
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-[var(--c-bg)] text-[var(--c-heading)]">
+    <div className="relative min-h-screen bg-app-bg text-app-heading">
       <Canvas />
       <Nav dark={dark} onToggleTheme={toggle} />
       <main className="relative z-10">

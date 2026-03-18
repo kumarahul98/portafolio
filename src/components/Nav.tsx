@@ -42,7 +42,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
               <li key={href}>
                 <a
                   href={href}
-                  className="text-base text-[var(--c-heading)] hover:text-brand transition-colors duration-200"
+                  className="text-base font-semibold text-app-heading drop-shadow-sm hover:text-brand transition-colors duration-200"
                 >
                   {label}
                 </a>
@@ -54,7 +54,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
           <button
             onClick={onToggleTheme}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="w-9 h-9 flex items-center justify-center text-[var(--c-heading)] hover:text-brand transition-colors duration-200"
+            className="w-9 h-9 flex items-center justify-center text-app-heading hover:text-brand transition-colors duration-200"
           >
             {dark ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -81,7 +81,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
           <button
             onClick={onToggleTheme}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="w-9 h-9 flex items-center justify-center text-[var(--c-heading)] hover:text-brand transition-colors duration-200"
+            className="w-9 h-9 flex items-center justify-center text-app-heading hover:text-brand transition-colors duration-200"
           >
             {dark ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -108,22 +108,22 @@ export default function Nav({ dark, onToggleTheme }: Props) {
             aria-label="Toggle menu"
             aria-expanded={open}
           >
-            <span className={`block h-0.5 w-6 bg-[var(--c-heading)] transition-transform duration-300 ${open ? 'translate-y-2 rotate-45' : ''}`} />
-            <span className={`block h-0.5 w-6 bg-[var(--c-heading)] transition-opacity duration-300 ${open ? 'opacity-0' : ''}`} />
-            <span className={`block h-0.5 w-6 bg-[var(--c-heading)] transition-transform duration-300 ${open ? '-translate-y-2 -rotate-45' : ''}`} />
+            <span className={`block h-0.5 w-6 bg-app-heading transition-transform duration-300 ${open ? 'translate-y-2 rotate-45' : ''}`} />
+            <span className={`block h-0.5 w-6 bg-app-heading transition-opacity duration-300 ${open ? 'opacity-0' : ''}`} />
+            <span className={`block h-0.5 w-6 bg-app-heading transition-transform duration-300 ${open ? '-translate-y-2 -rotate-45' : ''}`} />
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <ul className="md:hidden flex flex-col border-t border-[var(--c-border)] bg-[var(--c-bg)]">
+        <ul className="md:hidden flex flex-col border-t border-app-border bg-app-bg">
           {NAV_LINKS.map(({ label, href }) => (
             <li key={href}>
               <a
                 href={href}
                 onClick={close}
-                className="block px-6 py-4 text-base text-[var(--c-body)] hover:text-brand hover:bg-[var(--c-bg-subtle)] transition-colors duration-200"
+                className="block px-6 py-4 text-base font-semibold text-app-body drop-shadow-sm hover:text-brand hover:bg-app-bg-subtle transition-colors duration-200"
               >
                 {label}
               </a>

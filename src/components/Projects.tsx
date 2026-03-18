@@ -13,7 +13,7 @@ export default function Projects() {
       className="relative z-10 py-16 md:py-24 lg:py-32"
     >
       <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-6">
-        <h2 className="reveal font-anton text-5xl md:text-6xl text-[var(--c-heading)] mb-16 tracking-tight">
+        <h2 className="reveal font-anton text-5xl md:text-6xl text-app-heading mb-16 tracking-tight">
           PROJECTS
         </h2>
 
@@ -22,13 +22,13 @@ export default function Projects() {
             {visibleProjects.map((project) => (
             <div
               key={project.title}
-              className="reveal bg-[var(--c-card)] border border-[var(--c-border)] shadow-sm p-8 md:p-10 flex flex-col"
+              className="reveal bg-app-card border border-app-border shadow-sm p-8 md:p-10 flex flex-col"
             >
               <span className="font-pixel text-brand mb-5 block">{project.role}</span>
-              <h3 className="font-anton text-3xl md:text-4xl text-[var(--c-heading)] leading-tight tracking-tight mb-4">
+              <h3 className="font-anton text-3xl md:text-4xl text-app-heading leading-tight tracking-tight mb-4">
                 {project.title}
               </h3>
-              <p className="text-[var(--c-body)] text-base leading-relaxed flex-1 mb-8">
+              <p className="text-app-body text-base leading-relaxed flex-1 mb-8">
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-2 mt-auto">
@@ -48,7 +48,7 @@ export default function Projects() {
             <div className="mt-12 flex justify-center">
               <button
                 onClick={loadMore}
-                className="px-6 py-3 bg-[var(--c-card)] border border-[var(--c-border)] text-[var(--c-heading)] font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
+                className="px-6 py-3 bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
               >
                 VIEW MORE
               </button>

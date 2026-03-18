@@ -23,7 +23,7 @@ export default function Blogs({ data, loading }: Props) {
       className="relative z-10 py-16 md:py-24 lg:py-32"
     >
       <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-6">
-        <h2 className="reveal font-anton text-5xl md:text-6xl lg:text-7xl text-[var(--c-heading)] mb-16 tracking-tight">
+        <h2 className="reveal font-anton text-5xl md:text-6xl lg:text-7xl text-app-heading mb-16 tracking-tight">
           WRITINGS
         </h2>
 
@@ -32,7 +32,7 @@ export default function Blogs({ data, loading }: Props) {
             {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
         ) : sorted.length === 0 ? (
-          <p className="text-base text-[var(--c-muted)]">No writings yet — check back soon.</p>
+          <p className="text-base text-app-muted">No writings yet — check back soon.</p>
         ) : (
           <div className="flex flex-col">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -42,20 +42,20 @@ export default function Blogs({ data, loading }: Props) {
                 href={post.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="reveal group bg-[var(--c-card)] border border-[var(--c-border)] shadow-sm p-6 flex flex-col hover:border-brand/40 transition-colors duration-200"
+                className="reveal group bg-app-card border border-app-border shadow-sm p-6 flex flex-col hover:border-brand/40 transition-colors duration-200"
               >
-                <span className="font-pixel text-[var(--c-muted)] mb-4 block">
+                <span className="font-pixel text-app-muted mb-4 block">
                   {new Date(post.date).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric',
                   })}
                 </span>
-                <h3 className="text-[var(--c-heading)] font-semibold text-lg md:text-xl leading-snug mb-3 group-hover:text-brand transition-colors duration-200">
+                <h3 className="text-app-heading font-semibold text-lg md:text-xl leading-snug mb-3 group-hover:text-brand transition-colors duration-200">
                   {post.title}
                 </h3>
                 {post.description && (
-                  <p className="text-[var(--c-body)] text-base md:text-lg leading-relaxed line-clamp-2 flex-1 mb-4">
+                  <p className="text-app-body text-base md:text-lg leading-relaxed line-clamp-2 flex-1 mb-4">
                     {post.description}
                   </p>
                 )}
@@ -67,7 +67,7 @@ export default function Blogs({ data, loading }: Props) {
               <div className="mt-12 flex justify-center">
                 <button
                   onClick={loadMore}
-                  className="px-6 py-3 bg-[var(--c-card)] border border-[var(--c-border)] text-[var(--c-heading)] font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
+                  className="px-6 py-3 bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
                 >
                   VIEW MORE
                 </button>

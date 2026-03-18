@@ -16,7 +16,7 @@
     --c-muted: #9CA3B0;
     --c-border: rgba(156, 163, 176, 0.3);
     --c-card: #ffffff;
-    --c-nav-bg: rgba(249, 249, 250, 0.65);
+    --c-nav-bg: rgba(249, 249, 250, 0.85);
   }
 
   html.dark {
@@ -27,7 +27,7 @@
     --c-muted: #7C7C80;
     --c-border: rgba(255, 255, 255, 0.1);
     --c-card: rgba(213, 27, 28, 0.04);
-    --c-nav-bg: rgba(12, 26, 48, 0.65);
+    --c-nav-bg: rgba(12, 26, 48, 0.9);
   }
 
   html {

@@ -22,7 +22,7 @@ function VideoCard({ video, id }: { video: VideoEntry; id: string | null }) {
       href={video.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="reveal group bg-[var(--c-card)] border border-[var(--c-border)] shadow-sm flex flex-col hover:border-brand/40 transition-colors duration-200"
+      className="reveal group bg-app-card border border-app-border shadow-sm flex flex-col hover:border-brand/40 transition-colors duration-200"
     >
       {id && !imgError ? (
         <img
@@ -42,21 +42,21 @@ function VideoCard({ video, id }: { video: VideoEntry; id: string | null }) {
 
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-center gap-3 mb-3">
-          <span className="font-pixel text-[var(--c-muted)]">
+          <span className="font-pixel text-app-muted">
             {new Date(video.date).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'short',
             })}
           </span>
           {video.duration && (
-            <span className="font-pixel text-[var(--c-muted)]">{video.duration}</span>
+            <span className="font-pixel text-app-muted">{video.duration}</span>
           )}
         </div>
-        <h3 className="text-[var(--c-heading)] font-semibold text-lg leading-snug mb-3 group-hover:text-brand transition-colors duration-200 flex-1">
+        <h3 className="text-app-heading font-semibold text-lg leading-snug mb-3 group-hover:text-brand transition-colors duration-200 flex-1">
           {video.title}
         </h3>
         {video.description && (
-          <p className="text-[var(--c-body)] text-base leading-relaxed line-clamp-2 mb-4">
+          <p className="text-app-body text-base leading-relaxed line-clamp-2 mb-4">
             {video.description}
           </p>
         )}
@@ -79,10 +79,10 @@ export default function Videos({ data, loading }: Props) {
     <section
       id="videos"
       ref={sectionRef}
-      className="relative z-10 bg-[var(--c-bg-subtle)] py-16 md:py-24 lg:py-32"
+      className="relative z-10 bg-app-bg-subtle py-16 md:py-24 lg:py-32"
     >
       <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-6">
-        <h2 className="reveal font-anton text-5xl md:text-6xl text-[var(--c-heading)] mb-16 tracking-tight">
+        <h2 className="reveal font-anton text-5xl md:text-6xl text-app-heading mb-16 tracking-tight">
           TALKS &amp; VIDEOS
         </h2>
 
@@ -91,7 +91,7 @@ export default function Videos({ data, loading }: Props) {
             {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} hasImage />)}
           </div>
         ) : sorted.length === 0 ? (
-          <p className="text-base text-[var(--c-muted)]">No videos yet — check back soon.</p>
+          <p className="text-base text-app-muted">No videos yet — check back soon.</p>
         ) : (
           <div className="flex flex-col">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -104,7 +104,7 @@ export default function Videos({ data, loading }: Props) {
               <div className="mt-12 flex justify-center">
                 <button
                   onClick={loadMore}
-                  className="px-6 py-3 bg-[var(--c-card)] border border-[var(--c-border)] text-[var(--c-heading)] font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
+                  className="px-6 py-3 bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200"
                 >
                   VIEW MORE
                 </button>

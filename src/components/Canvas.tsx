@@ -27,7 +27,7 @@ export default function Canvas() {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       const gradient = ctx.createRadialGradient(x, y, 0, x, y, 400)
-      gradient.addColorStop(0, 'rgba(92, 141, 242, 0.10)')
+      gradient.addColorStop(0, 'rgba(92, 141, 242, 0.15)')
       gradient.addColorStop(1, 'rgba(92, 141, 242, 0)')
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -48,7 +48,7 @@ export default function Canvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="hidden md:block fixed inset-0 z-0 pointer-events-none"
+      className="hidden md:block fixed inset-0 z-30 pointer-events-none"
     />
   )
 }
