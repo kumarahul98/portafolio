@@ -5,8 +5,8 @@
 @layer base {
   :root {
     /* brand (fixed across themes) */
-    --brand: #5C8DF2;
-    --canvas-glow: rgba(92, 141, 242, 0.1);
+    --brand: #D51B1C;
+    --canvas-glow: rgba(255, 79, 0, 0.1);
 
     /* light theme */
     --c-bg: #ffffff;
@@ -26,7 +26,7 @@
     --c-body: #9CA3B0;
     --c-muted: #7C7C80;
     --c-border: rgba(255, 255, 255, 0.1);
-    --c-card: rgba(92, 141, 242, 0.04);
+    --c-card: rgba(213, 27, 28, 0.04);
     --c-nav-bg: rgba(12, 26, 48, 0.65);
   }
 
