@@ -14,7 +14,7 @@ export default function Blogs({ data, loading }: Props) {
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 
-  const { visibleItems: visibleBlogs, hasMore, loadMore } = usePagination(sorted, 6, 6)
+  const { visibleItems: visibleBlogs, hasMore, loadMore } = usePagination(sorted, 6, 6, 3)
 
   return (
     <section

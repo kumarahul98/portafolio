@@ -4,7 +4,7 @@ import { usePagination } from '../hooks/usePagination'
 
 export default function Projects() {
   const sectionRef = useReveal<HTMLElement>()
-  const { visibleItems: visibleProjects, hasMore, loadMore } = usePagination(PROJECTS, 4, 4)
+  const { visibleItems: visibleProjects, hasMore, loadMore } = usePagination(PROJECTS, 4, 4, 3)
 
   return (
     <section

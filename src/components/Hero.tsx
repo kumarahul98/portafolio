@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import myImage from '../../images/IMG_3002.jpg'
+import { loadGsap } from '../lib/gsap'
 
 export default function Hero() {
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -9,25 +8,53 @@ export default function Hero() {
   const btnsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(headingRef.current,
-        { y: 80, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }
-      )
-      gsap.fromTo(labelRef.current,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: 'power3.out' }
-      )
-      gsap.fromTo(bioRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1, delay: 0.5, ease: 'power2.out' }
-      )
-      gsap.fromTo(btnsRef.current!.children,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, stagger: 0.15, delay: 0.7, duration: 0.6, ease: 'power2.out' }
-      )
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let cleanup: (() => void) | undefined
+    let cancelled = false
+
+    loadGsap().then(({ gsap }) => {
+      if (cancelled) return
+
+      const ctx = gsap.context(() => {
+        gsap.fromTo(
+          headingRef.current,
+          { y: 80, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }
+        )
+        gsap.fromTo(
+          labelRef.current,
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: 'power3.out' }
+        )
+        gsap.fromTo(
+          bioRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1, delay: 0.5, ease: 'power2.out' }
+        )
+        if (btnsRef.current) {
+          gsap.fromTo(
+            btnsRef.current.children,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.15,
+              delay: 0.7,
+              duration: 0.6,
+              ease: 'power2.out',
+            }
+          )
+        }
+      })
+
+      cleanup = () => ctx.revert()
     })
-    return () => ctx.revert()
+
+    return () => {
+      cancelled = true
+      cleanup?.()
+    }
   }, [])
 
   return (
@@ -41,11 +68,25 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[#0a0a0a] z-0" />
 
         {/* Hero Image */}
-        <img
-          src={myImage}
-          alt="Rahul Kumar"
-          className="absolute inset-0 w-full h-full object-cover object-center z-0 -translate-x-[4%] transition-transform duration-1000 group-hover:scale-105"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcSet="/hero/hero-1600.webp 1600w, /hero/hero-2200.webp 2200w"
+            sizes="100vw"
+          />
+          <img
+            src="/hero/hero-2200.jpg"
+            srcSet="/hero/hero-1600.jpg 1600w, /hero/hero-2200.jpg 2200w"
+            sizes="100vw"
+            alt="Rahul Kumar"
+            width="2200"
+            height="1650"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover object-[92%_center] sm:object-[87%_center] md:object-center z-0 md:-translate-x-[4%] transition-transform duration-1000 group-hover:scale-105"
+          />
+        </picture>
 
         {/* Left fade — wide and soft */}
         <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#0a0a0a] from-30% via-[#0a0a0a]/70 via-55% to-transparent" />

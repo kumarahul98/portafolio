@@ -8,12 +8,13 @@ export default function Icon({ name, ...props }: IconProps) {
   switch (name) {
     case 'logo':
       return (
-        <svg width="36" height="42" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" {...props}>
-          <path d="M12 2C12 2 18 7 18 14H6C6 7 12 2 12 2z" fill="currentColor" opacity="0.9"/>
-          <rect x="8" y="14" width="8" height="7" rx="1" fill="currentColor" opacity="0.7"/>
-          <path d="M8 14l-3 4h3" fill="currentColor" opacity="0.5"/>
-          <path d="M16 14l3 4h-3" fill="currentColor" opacity="0.5"/>
-          <circle cx="12" cy="10" r="2" fill="white"/>
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" {...props}>
+          <rect x="3" y="4" width="18" height="14" rx="2.5" fill="currentColor" opacity="0.92" />
+          <rect x="5.25" y="6.25" width="13.5" height="9.5" rx="1" fill="#0B1220" opacity="0.95" />
+          <circle cx="7.25" cy="8.25" r="0.6" fill="white" opacity="0.85" />
+          <circle cx="9.15" cy="8.25" r="0.6" fill="white" opacity="0.55" />
+          <path d="M7.4 10.9l1.7 1.7-1.7 1.7" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M10.9 14.3h3.8" stroke="white" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
       )
     case 'sun':

@@ -26,6 +26,14 @@
     <!-- Theme Color -->
     <meta name="theme-color" content="#162C5A" />
     <link rel="canonical" href="https://www.rahulkmr.com/" />
+    <link
+      rel="preload"
+      as="image"
+      href="/hero/hero-2200.webp"
+      imagesrcset="/hero/hero-1600.webp 1600w, /hero/hero-2200.webp 2200w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -51,9 +59,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W84E4MXNXC"></script>

@@ -1,30 +1,55 @@
-import { useEffect } from 'react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useContent } from './hooks/useContent'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { useTheme } from './hooks/useTheme'
+import { loadGsap } from './lib/gsap'
 import Canvas from './components/Canvas'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
-import Blogs from './components/Blogs'
-import Videos from './components/Videos'
-import Projects from './components/Projects'
-import Contact from './components/Contact'
+import SectionPlaceholder from './components/SectionPlaceholder'
+
+const DeferredSections = lazy(() => import('./components/DeferredSections'))
 
 export default function App() {
-  const content = useContent()
   const { dark, toggle } = useTheme()
+  const [showDeferredSections, setShowDeferredSections] = useState(false)
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined
     const onResize = () => {
       if (timer) clearTimeout(timer)
-      timer = setTimeout(() => ScrollTrigger.refresh(), 150)
+      timer = setTimeout(() => {
+        loadGsap().then(({ ScrollTrigger }) => ScrollTrigger.refresh())
+      }, 150)
     }
     window.addEventListener('resize', onResize)
     return () => {
       if (timer) clearTimeout(timer)
       window.removeEventListener('resize', onResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    const win = window as Window & {
+      requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number
+      cancelIdleCallback?: (handle: number) => void
+    }
+
+    let idleId: number | null = null
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+
+    if (typeof win.requestIdleCallback === 'function') {
+      idleId = win.requestIdleCallback(() => setShowDeferredSections(true), { timeout: 1200 })
+    } else {
+      timeoutId = setTimeout(() => setShowDeferredSections(true), 400)
+    }
+
+    return () => {
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId)
+      }
+      if (idleId !== null && typeof win.cancelIdleCallback === 'function') {
+        win.cancelIdleCallback(idleId)
+      }
     }
   }, [])
 
@@ -35,10 +60,18 @@ export default function App() {
       <main className="relative z-10">
         <Hero />
         <About />
-        <Blogs data={content.data?.blogs ?? []} loading={content.loading} />
-        <Videos data={content.data?.videos ?? []} loading={content.loading} />
-        <Projects />
-        <Contact />
+        {showDeferredSections ? (
+          <Suspense fallback={<SectionPlaceholder subtle />}>
+            <DeferredSections />
+          </Suspense>
+        ) : (
+          <>
+            <SectionPlaceholder subtle />
+            <SectionPlaceholder />
+            <SectionPlaceholder />
+            <SectionPlaceholder />
+          </>
+        )}
       </main>
     </div>
   )

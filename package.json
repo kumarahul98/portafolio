@@ -4,10 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "predev": "npm run sync-content",
+    "dev": "vite --host 127.0.0.1",
+    "sync-content": "node scripts/sync-content.mjs",
+    "build": "npm run sync-content && tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fetch-video-dates": "node scripts/fetch-video-dates.mjs"
   },
   "dependencies": {
     "front-matter": "^4.0.2",

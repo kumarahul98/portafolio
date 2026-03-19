@@ -22,9 +22,9 @@ const config: Config = {
         'app-nav-bg': 'var(--c-nav-bg)',
       },
       fontFamily: {
-        anton: ['Anton', 'sans-serif'],
-        pixel: ['"Press Start 2P"', 'monospace'],
-        sans: ['Inter', 'sans-serif'],
+        anton: ['Anton', 'Impact', 'sans-serif'],
+        pixel: ['"Press Start 2P"', 'ui-monospace', 'monospace'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
     },
   },

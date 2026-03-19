@@ -30,9 +30,9 @@ export default function Nav({ dark, onToggleTheme }: Props) {
       <div className="absolute inset-0 pointer-events-none z-0" style={{ background: 'linear-gradient(to bottom, var(--c-nav-bg) 85%, transparent 100%)' }} />
       <div className="relative z-10 max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#hero" onClick={close} className="flex items-center gap-2 text-brand">
-          <Icon name="logo" />
-          <span className="font-anton text-3xl tracking-wide leading-none">RK.</span>
+        <a href="#hero" onClick={close} className="inline-flex items-end gap-1 text-brand">
+          <Icon name="logo" className="block h-10 w-10 shrink-0 translate-y-1" />
+          <span className="font-anton text-3xl tracking-wide leading-none pb-[1px]">RK.</span>
         </a>
 
         {/* Desktop links + theme toggle */}
@@ -42,7 +42,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
               <li key={href}>
                 <a
                   href={href}
-                  className="text-base font-semibold text-app-heading drop-shadow-sm hover:text-brand transition-colors duration-200"
+                  className="block px-2 py-2 -mx-2 -my-2 text-base font-semibold text-app-heading drop-shadow-sm hover:text-brand transition-colors duration-200"
                 >
                   {label}
                 </a>
