@@ -51,11 +51,20 @@ export default function Icon({ name, ...props }: IconProps) {
       )
     case 'antstack':
       return (
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" {...props}>
-          <rect x="2" y="4" width="20" height="4" rx="1.5"/>
-          <rect x="2" y="10" width="20" height="4" rx="1.5" opacity="0.7"/>
-          <rect x="2" y="16" width="20" height="4" rx="1.5" opacity="0.4"/>
-        </svg>
+        <span
+          className="inline-block h-8 w-8 bg-current"
+          style={{
+            WebkitMaskImage: 'url(/Symbol_light.svg)',
+            maskImage: 'url(/Symbol_light.svg)',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center',
+            maskPosition: 'center',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+          }}
+          aria-hidden="true"
+        />
       )
     case 'github':
       return (

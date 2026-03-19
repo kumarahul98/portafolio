@@ -29,8 +29,8 @@
     <link
       rel="preload"
       as="image"
-      href="/hero/hero-2200.webp"
-      imagesrcset="/hero/hero-1600.webp 1600w, /hero/hero-2200.webp 2200w"
+      href="/hero/hero-960.webp"
+      imagesrcset="/hero/hero-960.webp 960w, /hero/hero-1600.webp 1600w, /hero/hero-2200.webp 2200w"
       imagesizes="100vw"
       fetchpriority="high"
     />
@@ -77,12 +77,19 @@
     </noscript>
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W84E4MXNXC"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-W84E4MXNXC');
+      window.addEventListener('load', () => {
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-W84E4MXNXC';
+        script.async = true;
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-W84E4MXNXC');
+      }, { once: true });
     </script>
   </head>
   <body>

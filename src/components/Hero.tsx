@@ -8,7 +8,7 @@ export default function Hero() {
   const btnsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (window.matchMedia('(max-width: 767px), (prefers-reduced-motion: reduce)').matches) return
 
     let cleanup: (() => void) | undefined
     let cancelled = false
@@ -71,16 +71,16 @@ export default function Hero() {
         <picture>
           <source
             type="image/webp"
-            srcSet="/hero/hero-1600.webp 1600w, /hero/hero-2200.webp 2200w"
+            srcSet="/hero/hero-960.webp 960w, /hero/hero-1600.webp 1600w, /hero/hero-2200.webp 2200w"
             sizes="100vw"
           />
           <img
-            src="/hero/hero-2200.jpg"
-            srcSet="/hero/hero-1600.jpg 1600w, /hero/hero-2200.jpg 2200w"
+            src="/hero/hero-1600.jpg"
+            srcSet="/hero/hero-960.jpg 960w, /hero/hero-1600.jpg 1600w, /hero/hero-2200.jpg 2200w"
             sizes="100vw"
             alt="Rahul Kumar"
-            width="2200"
-            height="1650"
+            width="1600"
+            height="1200"
             fetchPriority="high"
             loading="eager"
             decoding="async"
@@ -101,7 +101,7 @@ export default function Hero() {
         <div className="relative z-10 flex flex-col items-start max-w-2xl px-8 md:px-16 pt-24 pb-16">
           <span
             ref={labelRef}
-            className="font-pixel text-[10px] sm:text-xs text-brand tracking-widest uppercase mb-6 opacity-90"
+            className="font-pixel text-xs sm:text-sm text-brand tracking-[0.18em] uppercase mb-6 opacity-90"
           >
             Principal Solutions Architect
           </span>

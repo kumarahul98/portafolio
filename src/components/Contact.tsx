@@ -21,7 +21,7 @@ export default function Contact() {
 
         <a
           href="mailto:rahulkumar@antstack.com"
-          className="reveal bg-brand hover:bg-brand-dark text-white font-medium text-base px-10 py-4 transition-colors duration-200 mb-16"
+          className="reveal bg-brand hover:bg-brand-dark text-white font-medium text-base px-10 py-4 rounded-full transition-colors duration-200 mb-16"
         >
           rahulkumar@antstack.com
         </a>
