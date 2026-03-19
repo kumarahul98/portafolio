@@ -7,6 +7,9 @@
     /* brand (fixed across themes) */
     --brand: #D51B1C;
     --canvas-glow: rgba(255, 79, 0, 0.1);
+    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-anton: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    --font-pixel: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
     /* light theme */
     --c-bg: #ffffff;
@@ -34,10 +37,16 @@
     scroll-behavior: smooth;
   }
 
+  html.fonts-loaded {
+    --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-anton: Anton, Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    --font-pixel: "Press Start 2P", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
   body {
     background-color: var(--c-bg);
     color: var(--c-body);
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -94,7 +103,7 @@
 
 @layer utilities {
   .font-pixel {
-    font-family: 'Press Start 2P', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-family: var(--font-pixel);
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;

@@ -83,8 +83,8 @@ export default function Hero() {
             height="1200"
             fetchPriority="high"
             loading="eager"
-            decoding="sync"
-            className="absolute inset-0 w-full h-full object-cover object-[92%_center] sm:object-[87%_center] md:object-center z-0 md:-translate-x-[4%] transition-transform duration-1000 group-hover:scale-105"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover object-right md:object-[80%_center] z-0 transition-transform duration-1000 group-hover:scale-105"
           />
         </picture>
 

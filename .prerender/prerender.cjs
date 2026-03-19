@@ -19730,9 +19730,9 @@ var require_react_dom_server_legacy_node_development = __commonJS({
           return instance.render();
         }
       }, callRenderInDEV = callRender.react_stack_bottom_frame.bind(callRender), callLazyInit = {
-        react_stack_bottom_frame: function(lazy2) {
-          var init4 = lazy2._init;
-          return init4(lazy2._payload);
+        react_stack_bottom_frame: function(lazy) {
+          var init4 = lazy._init;
+          return init4(lazy._payload);
         }
       }, callLazyInitInDEV = callLazyInit.react_stack_bottom_frame.bind(callLazyInit), lastResetTime = 0;
       if ("object" === typeof performance && "function" === typeof performance.now) {
@@ -27209,9 +27209,9 @@ var require_react_dom_server_node_development = __commonJS({
           return instance.render();
         }
       }, callRenderInDEV = callRender.react_stack_bottom_frame.bind(callRender), callLazyInit = {
-        react_stack_bottom_frame: function(lazy2) {
-          var init4 = lazy2._init;
-          return init4(lazy2._payload);
+        react_stack_bottom_frame: function(lazy) {
+          var init4 = lazy._init;
+          return init4(lazy._payload);
         }
       }, callLazyInitInDEV = callLazyInit.react_stack_bottom_frame.bind(callLazyInit), lastResetTime = 0;
       if ("object" === typeof performance && "function" === typeof performance.now) {
@@ -29708,7 +29708,7 @@ var init_gsap_core = __esm({
       return plugin;
     };
     _initTween = function _initTween2(tween, time, tTime) {
-      var vars = tween.vars, ease = vars.ease, startAt = vars.startAt, immediateRender = vars.immediateRender, lazy2 = vars.lazy, onUpdate = vars.onUpdate, runBackwards = vars.runBackwards, yoyoEase = vars.yoyoEase, keyframes = vars.keyframes, autoRevert = vars.autoRevert, dur = tween._dur, prevStartAt = tween._startAt, targets = tween._targets, parent = tween.parent, fullTargets = parent && parent.data === "nested" ? parent.vars.targets : targets, autoOverwrite = tween._overwrite === "auto" && !_suppressOverwrites, tl = tween.timeline, cleanVars, i, p, pt, target, hasPriority, gsData, harness, plugin, ptLookup, index, harnessVars, overwritten;
+      var vars = tween.vars, ease = vars.ease, startAt = vars.startAt, immediateRender = vars.immediateRender, lazy = vars.lazy, onUpdate = vars.onUpdate, runBackwards = vars.runBackwards, yoyoEase = vars.yoyoEase, keyframes = vars.keyframes, autoRevert = vars.autoRevert, dur = tween._dur, prevStartAt = tween._startAt, targets = tween._targets, parent = tween.parent, fullTargets = parent && parent.data === "nested" ? parent.vars.targets : targets, autoOverwrite = tween._overwrite === "auto" && !_suppressOverwrites, tl = tween.timeline, cleanVars, i, p, pt, target, hasPriority, gsData, harness, plugin, ptLookup, index, harnessVars, overwritten;
       tl && (!keyframes || !ease) && (ease = "none");
       tween._ease = _parseEase(ease, _defaults.ease);
       tween._yEase = yoyoEase ? _invertEase(_parseEase(yoyoEase === true ? ease : yoyoEase, _defaults.ease)) : 0;
@@ -29733,7 +29733,7 @@ var init_gsap_core = __esm({
             overwrite: false,
             parent,
             immediateRender: true,
-            lazy: !prevStartAt && _isNotFalse(lazy2),
+            lazy: !prevStartAt && _isNotFalse(lazy),
             startAt: null,
             delay: 0,
             onUpdate: onUpdate && function() {
@@ -29757,7 +29757,7 @@ var init_gsap_core = __esm({
               overwrite: false,
               data: "isFromStart",
               //we tag the tween with as "isFromStart" so that if [inside a plugin] we need to only do something at the very END of a tween, we have a way of identifying this tween as merely the one that's setting the beginning values for a "from()" tween. For example, clearProps in CSSPlugin should only get applied at the very END of a tween and without this tag, from(...{height:100, clearProps:"height", delay:1}) would wipe the height at the beginning of the tween and after 1 second, it'd kick back in.
-              lazy: immediateRender && !prevStartAt && _isNotFalse(lazy2),
+              lazy: immediateRender && !prevStartAt && _isNotFalse(lazy),
               immediateRender,
               //zero-duration tweens render immediately by default, but if we're not specifically instructed to render this tween immediately, we should skip this and merely _init() to record the starting values (rendering them immediately would push them to completion which is wasteful in that case - we'd have to render(-1) immediately after)
               stagger: 0,
@@ -29778,7 +29778,7 @@ var init_gsap_core = __esm({
           }
         }
         tween._pt = tween._ptCache = 0;
-        lazy2 = dur && _isNotFalse(lazy2) || lazy2 && !dur;
+        lazy = dur && _isNotFalse(lazy) || lazy && !dur;
         for (i = 0; i < targets.length; i++) {
           target = targets[i];
           gsData = target._gsap || _harness(targets)[i]._gsap;
@@ -29808,7 +29808,7 @@ var init_gsap_core = __esm({
             overwritten = !tween.parent;
             _overwritingTween = 0;
           }
-          tween._pt && lazy2 && (_lazyLookup[gsData.id] = 1);
+          tween._pt && lazy && (_lazyLookup[gsData.id] = 1);
         }
         hasPriority && _sortPropTweensByPriority(tween);
         tween._onInit && tween._onInit(tween);
@@ -34342,27 +34342,6 @@ var init_ScrollTrigger = __esm({
   }
 });
 
-// src/lib/gsap.ts
-function loadGsap() {
-  if (!gsapModulesPromise) {
-    gsapModulesPromise = Promise.all([Promise.resolve().then(() => (init_gsap(), gsap_exports)), Promise.resolve().then(() => (init_ScrollTrigger(), ScrollTrigger_exports))]).then(
-      ([gsapModule, scrollTriggerModule]) => {
-        const gsap4 = gsapModule.default;
-        const { ScrollTrigger: ScrollTrigger3 } = scrollTriggerModule;
-        gsap4.registerPlugin(ScrollTrigger3);
-        return { gsap: gsap4, ScrollTrigger: ScrollTrigger3 };
-      }
-    );
-  }
-  return gsapModulesPromise;
-}
-var gsapModulesPromise;
-var init_gsap2 = __esm({
-  "src/lib/gsap.ts"() {
-    gsapModulesPromise = null;
-  }
-});
-
 // node_modules/react/cjs/react-jsx-runtime.production.js
 var require_react_jsx_runtime_production = __commonJS({
   "node_modules/react/cjs/react-jsx-runtime.production.js"(exports2) {
@@ -34662,653 +34641,13 @@ var require_jsx_runtime = __commonJS({
   }
 });
 
-// src/components/ui/Icon.tsx
-function Icon({ name, ...props }) {
-  switch (name) {
-    case "logo":
-      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { width: "36", height: "36", viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true", ...props, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "3", y: "4", width: "18", height: "14", rx: "2.5", fill: "currentColor", opacity: "0.92" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "5.25", y: "6.25", width: "13.5", height: "9.5", rx: "1", fill: "#0B1220", opacity: "0.95" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "7.25", cy: "8.25", r: "0.6", fill: "white", opacity: "0.85" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "9.15", cy: "8.25", r: "0.6", fill: "white", opacity: "0.55" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M7.4 10.9l1.7 1.7-1.7 1.7", stroke: "white", strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M10.9 14.3h3.8", stroke: "white", strokeWidth: "1.3", strokeLinecap: "round" })
-      ] });
-    case "sun":
-      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", ...props, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "12", cy: "12", r: "5" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "12", y1: "1", x2: "12", y2: "3" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "12", y1: "21", x2: "12", y2: "23" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "4.22", y1: "4.22", x2: "5.64", y2: "5.64" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "18.36", y1: "18.36", x2: "19.78", y2: "19.78" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "1", y1: "12", x2: "3", y2: "12" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "21", y1: "12", x2: "23", y2: "12" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "4.22", y1: "19.78", x2: "5.64", y2: "18.36" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "18.36", y1: "5.64", x2: "19.78", y2: "4.22" })
-      ] });
-    case "moon":
-      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" }) });
-    case "linkedin":
-      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" }) });
-    case "twitter":
-      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" }) });
-    case "antstack":
-      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-        "span",
-        {
-          className: "inline-block h-8 w-8 bg-current",
-          style: {
-            WebkitMaskImage: "url(/Symbol_light.svg)",
-            maskImage: "url(/Symbol_light.svg)",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
-            WebkitMaskPosition: "center",
-            maskPosition: "center",
-            WebkitMaskSize: "contain",
-            maskSize: "contain"
-          },
-          "aria-hidden": "true"
-        }
-      );
-    case "github":
-      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" }) });
-    case "instagram":
-      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" }) });
-    default:
-      return null;
-  }
-}
-var import_jsx_runtime2;
-var init_Icon = __esm({
-  "src/components/ui/Icon.tsx"() {
-    import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
-  }
-});
-
-// src/hooks/useReveal.ts
-function useReveal(deps = []) {
-  const ref2 = (0, import_react5.useRef)(null);
-  (0, import_react5.useEffect)(() => {
-    if (!ref2.current) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let cleanup;
-    let cancelled = false;
-    loadGsap().then(({ gsap: gsap4, ScrollTrigger: ScrollTrigger3 }) => {
-      if (cancelled || !ref2.current) return;
-      const ctx = gsap4.context(() => {
-        gsap4.fromTo(
-          ".reveal",
-          { opacity: 0, y: 60 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power2.out",
-            stagger: 0.12,
-            scrollTrigger: {
-              trigger: ref2.current,
-              start: "top 80%"
-            }
-          }
-        );
-        ScrollTrigger3.refresh();
-      }, ref2);
-      cleanup = () => ctx.revert();
-    });
-    return () => {
-      cancelled = true;
-      cleanup?.();
-    };
-  }, deps);
-  return ref2;
-}
-var import_react5;
-var init_useReveal = __esm({
-  "src/hooks/useReveal.ts"() {
-    import_react5 = __toESM(require_react(), 1);
-    init_gsap2();
-  }
-});
-
-// src/content/generated.ts
-var contentData;
-var init_generated = __esm({
-  "src/content/generated.ts"() {
-    contentData = {
-      "blogs": [
-        {
-          "title": "Optimizing RLS Performance with Supabase (Postgres)",
-          "url": "https://www.antstack.com/blog/optimizing-rls-performance-with-supabase/",
-          "date": "2025-01-13",
-          "description": "Deep dive into Row Level Security performance tuning on Supabase \u2014 indexes, policy design, and query patterns that keep multi-tenant apps fast."
-        },
-        {
-          "title": "Multi-Tenant Applications with RLS on Supabase (Postgres)",
-          "url": "https://www.antstack.com/blog/multi-tenant-applications-with-rls-on-supabase-postgress/",
-          "date": "2024-12-23",
-          "description": "How to architect multi-tenant SaaS apps using Postgres Row Level Security on Supabase \u2014 tenant isolation, policy patterns, and real-world trade-offs."
-        },
-        {
-          "title": "Streaming DynamoDB Data into a Hudi Table: AWS Glue in Action",
-          "url": "https://www.antstack.com/blog/Streaming-DynamoDB-Data-into-a-Hudi-Table/",
-          "date": "2024-10-14",
-          "description": "Step-by-step walkthrough of streaming DynamoDB change data into an Apache Hudi table using AWS Glue, enabling near-real-time lakehouse updates."
-        },
-        {
-          "title": "BigQuery Basics: A Quick Start Guide for Newbies",
-          "url": "https://www.antstack.com/blog/big-query-basics-a-quick-start-guide-for-newbies/",
-          "date": "2024-05-08",
-          "description": "A practical introduction to Google BigQuery \u2014 serverless SQL, partitioning, clustering, and cost control for engineers new to the platform."
-        },
-        {
-          "title": "Getting Started with OpenSearch",
-          "url": "https://www.antstack.com/blog/getting-started-with-open-search/",
-          "date": "2021-10-27",
-          "description": "Introduction to OpenSearch \u2014 setting up clusters, indexing data, and running full-text and aggregation queries on AWS."
-        }
-      ],
-      "videos": [
-        {
-          "title": "AWS re:Invent Highlights: GENAI, S3 Vectors, Nova Models & Durable Lambda | AntStack TV",
-          "url": "https://www.youtube.com/watch?v=LNA-YSUQo6c",
-          "date": "2026-01-21",
-          "description": "Covering S3 Vectors, Bedrock Nova models, Durable Lambda, AgentCore, SageMaker updates, and the new Security Agents from AWS re:Invent.",
-          "duration": "21:30",
-          "views": "146"
-        },
-        {
-          "title": "Cloudflare's Quiet Shift into an AI + Data Platform \u2014 Workers, R2, AI Gateway Explained | AntStack TV",
-          "url": "https://www.youtube.com/watch?v=H2vWM8M_5TM",
-          "date": "2026-01-07",
-          "description": "Breaking down Cloudflare's evolution into an AI and data platform \u2014 Workers, R2, D1, AI Gateway, RAG, Apache Iceberg, and Remote MCP.",
-          "duration": "18:21",
-          "views": "303"
-        },
-        {
-          "title": "AntStack TV | Episode 7 | Rahul Kumar Breaks Down AWS re:Invent's Biggest Data Engineering Reveals",
-          "url": "https://www.youtube.com/watch?v=_qRWFOOZ7v4",
-          "date": "2025-01-29",
-          "description": "S3 Tables, SageMaker Lake House, Zero-ETL, AWS Glue 5.0, DynamoDB Global Tables, Aurora DSQL, and QuickSight AI \u2014 all the data engineering highlights from re:Invent.",
-          "duration": "12:15",
-          "views": "275"
-        },
-        {
-          "title": "AntStack TV | Episode 4 | BigQuery: Google's Data Warehouse Service",
-          "url": "https://www.youtube.com/watch?v=h_ptY7WGJb8",
-          "date": "2024-10-09",
-          "description": "Exploring Google BigQuery as a serverless data warehouse \u2014 SQL engine, BI Engine, real-time streaming, and how it compares to AWS alternatives.",
-          "duration": "11:53",
-          "views": "330"
-        },
-        {
-          "title": "Getting Started with DynamoDB Single Table Design with a Real-Life Case Study",
-          "url": "https://www.youtube.com/watch?v=71OCX9d8ed8",
-          "date": "2023-08-30",
-          "description": "A comprehensive 47-minute deep dive into DynamoDB single table design \u2014 primary key modeling, entity organization, access patterns, and a real-world case study.",
-          "duration": "47:32",
-          "views": "2300"
-        },
-        {
-          "title": "Efficient ETL on the Cloud: Embracing the Serverless Paradigm \u2014 AWS Community Day Kochi 2023",
-          "url": "https://www.youtube.com/watch?v=1eS83MzrfgE",
-          "date": "2023-01-01",
-          "description": "Conference talk at AWS Community Day Kochi 2023 on building serverless ETL pipelines on AWS \u2014 Lambda, Glue, Step Functions, and event-driven patterns.",
-          "duration": "26:58",
-          "views": "41"
-        },
-        {
-          "title": "AWS OpenSearch \u2014 Building a Search Engine for your Data, with OpenSearch",
-          "url": "https://www.youtube.com/watch?v=KvEdRSJ2shQ",
-          "date": "2022-02-23",
-          "description": "Get started with OpenSearch basics and build a search engine for your data using OpenSearch queries.",
-          "views": "30622"
-        }
-      ],
-      "links": []
-    };
-  }
-});
-
-// src/hooks/useContent.ts
-function useContent() {
-  return {
-    data: contentData,
-    loading: false
-  };
-}
-var init_useContent = __esm({
-  "src/hooks/useContent.ts"() {
-    init_generated();
-  }
-});
-
-// src/hooks/usePagination.ts
-function usePagination(items, initialCount, increment, mobileCount = initialCount) {
-  const getPageSize = () => typeof window !== "undefined" && window.innerWidth < 768 ? mobileCount : initialCount;
-  const [visibleCount, setVisibleCount] = (0, import_react6.useState)(getPageSize);
-  (0, import_react6.useEffect)(() => {
-    const onResize = () => {
-      setVisibleCount((prev) => {
-        const nextBaseCount = getPageSize();
-        return Math.max(nextBaseCount, Math.min(prev, items.length));
-      });
-    };
-    window.addEventListener("resize", onResize, { passive: true });
-    return () => window.removeEventListener("resize", onResize);
-  }, [initialCount, mobileCount, items.length]);
-  const visibleItems = items.slice(0, visibleCount);
-  const hasMore = visibleCount < items.length;
-  const loadMore = () => setVisibleCount((prev) => prev + (window.innerWidth < 768 ? mobileCount : increment));
-  return { visibleItems, hasMore, loadMore };
-}
-var import_react6;
-var init_usePagination = __esm({
-  "src/hooks/usePagination.ts"() {
-    import_react6 = __toESM(require_react(), 1);
-  }
-});
-
-// src/components/ui/SkeletonCard.tsx
-function SkeletonCard({ hasImage = false }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "bg-app-card border border-app-border animate-pulse flex flex-col", children: [
-    hasImage && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "w-full aspect-video bg-app-border" }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: hasImage ? "p-5" : "p-6", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "h-3 bg-app-border rounded mb-5 w-1/3" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "h-6 bg-app-border rounded mb-4 w-3/4" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "h-4 bg-app-border rounded mb-2 w-full" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "h-4 bg-app-border rounded w-2/3" })
-    ] })
-  ] });
-}
-var import_jsx_runtime7;
-var init_SkeletonCard = __esm({
-  "src/components/ui/SkeletonCard.tsx"() {
-    import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
-  }
-});
-
-// src/components/Blogs.tsx
-function Blogs({ data, loading }) {
-  const sectionRef = useReveal([data]);
-  const sorted = [...data].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-  const { visibleItems: visibleBlogs, hasMore, loadMore } = usePagination(sorted, 6, 6, 3);
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-    "section",
-    {
-      id: "blogs",
-      ref: sectionRef,
-      className: "relative z-10 py-16 md:py-24 lg:py-32",
-      children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { className: "reveal font-anton text-5xl md:text-6xl lg:text-7xl text-app-heading mb-16 tracking-tight", children: "WRITINGS" }),
-        loading ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: Array.from({ length: 6 }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(SkeletonCard, {}, i)) }) : sorted.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-base text-app-muted", children: "No writings yet \u2014 check back soon." }) : /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex flex-col", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: visibleBlogs.map((post) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-            "a",
-            {
-              href: post.url,
-              target: "_blank",
-              rel: "noopener noreferrer",
-              className: "reveal group bg-app-card border border-app-border shadow-sm p-6 flex flex-col hover:border-brand/40 transition-colors duration-200",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "font-pixel text-app-muted mb-4 block", children: new Date(post.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric"
-                }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { className: "text-app-heading font-semibold text-lg md:text-xl leading-snug mb-3 group-hover:text-brand transition-colors duration-200", children: post.title }),
-                post.description && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-app-body text-base md:text-lg leading-relaxed line-clamp-2 flex-1 mb-4", children: post.description }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-brand text-base font-medium mt-auto", children: "Read \u2192" })
-              ]
-            },
-            post.url
-          )) }),
-          hasMore && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "mt-12 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-            "button",
-            {
-              onClick: loadMore,
-              className: "px-6 py-3 bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200",
-              children: "VIEW MORE"
-            }
-          ) })
-        ] })
-      ] })
-    }
-  );
-}
-var import_jsx_runtime8;
-var init_Blogs = __esm({
-  "src/components/Blogs.tsx"() {
-    init_useReveal();
-    init_usePagination();
-    init_SkeletonCard();
-    import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-  }
-});
-
-// src/components/Videos.tsx
-function getYouTubeId(url) {
-  const match = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
-  return match ? match[1] : null;
-}
-function VideoCard({ video, id }) {
-  const [imgError, setImgError] = (0, import_react7.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
-    "a",
-    {
-      href: video.url,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "reveal group bg-app-card border border-app-border shadow-sm flex flex-col hover:border-brand/40 transition-colors duration-200",
-      children: [
-        id && !imgError ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          "img",
-          {
-            src: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-            alt: video.title,
-            className: "w-full aspect-video object-cover",
-            onError: () => setImgError(true)
-          }
-        ) : /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          "div",
-          {
-            className: "w-full aspect-video bg-[#5C8DF2]/10 flex items-center justify-center",
-            "aria-hidden": "true",
-            children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "text-brand text-4xl", children: "\u25B6" })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "p-5 flex flex-col flex-1", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center gap-3 mb-3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "font-pixel text-app-muted", children: (/* @__PURE__ */ new Date(video.date + "T12:00:00")).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "short"
-            }) }),
-            video.duration && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "font-pixel text-app-muted", children: video.duration })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h3", { className: "text-app-heading font-semibold text-lg leading-snug mb-3 group-hover:text-brand transition-colors duration-200 flex-1", children: video.title }),
-          video.description && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-app-body text-base leading-relaxed line-clamp-2 mb-4", children: video.description }),
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "text-brand text-base font-medium mt-auto", children: "Watch \u2192" })
-        ] })
-      ]
-    }
-  );
-}
-function Videos({ data, loading }) {
-  const sectionRef = useReveal([data]);
-  const sorted = [...data].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-  const { visibleItems: visibleVideos, hasMore, loadMore } = usePagination(sorted, 6, 6, 3);
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-    "section",
-    {
-      id: "videos",
-      ref: sectionRef,
-      className: "relative z-10 bg-app-bg-subtle py-16 md:py-24 lg:py-32",
-      children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h2", { className: "reveal font-anton text-5xl md:text-6xl text-app-heading mb-16 tracking-tight", children: "TALKS & VIDEOS" }),
-        loading ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: Array.from({ length: 6 }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(SkeletonCard, { hasImage: true }, i)) }) : sorted.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-base text-app-muted", children: "No videos yet \u2014 check back soon." }) : /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex flex-col", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: visibleVideos.map((video) => {
-            const id = getYouTubeId(video.url);
-            return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(VideoCard, { video, id }, video.url + video.title);
-          }) }),
-          hasMore && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "mt-12 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-            "button",
-            {
-              onClick: loadMore,
-              className: "px-6 py-3 bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200",
-              children: "VIEW MORE"
-            }
-          ) })
-        ] })
-      ] })
-    }
-  );
-}
-var import_react7, import_jsx_runtime9;
-var init_Videos = __esm({
-  "src/components/Videos.tsx"() {
-    init_useReveal();
-    init_usePagination();
-    import_react7 = __toESM(require_react(), 1);
-    init_SkeletonCard();
-    import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
-  }
-});
-
-// src/data/projects.ts
-var PROJECTS;
-var init_projects = __esm({
-  "src/data/projects.ts"() {
-    PROJECTS = [
-      {
-        title: "Health Tech \u2014 FHIR ETL Pipeline",
-        role: "Principal Solutions Architect",
-        description: "Health tech app for doctors to manage patients. Architected a scalable ETL pipeline to process FHIR healthcare data, perform patient metric calculations, enrich datasets with derived metrics, and synchronize with the application layer. Built integrations with multiple EMR systems over FHIR APIs using AWS and Databricks \u2014 EventBridge, Step Functions, S3, and Databricks Serverless.",
-        tags: ["AWS", "Databricks", "FHIR", "Step Functions", "EventBridge", "S3"]
-      },
-      {
-        title: "Counterfeit Detection Platform",
-        role: "Principal Solutions Architect",
-        description: "Tool to stop counterfeit products by detecting unauthorized listings using images. Led development of a scalable batch-processing system on AWS, implementing job orchestration for AWS Bedrock batch inference using Lambda, EventBridge, DynamoDB, and S3.",
-        tags: ["AWS Bedrock", "Lambda", "DynamoDB", "EventBridge", "GenAI"]
-      },
-      {
-        title: "Global Cruise Replication Engine",
-        role: "Principal Solutions Architect",
-        description: "Replication Engine POC for a global cruise operator to synchronize data between shore and ship environments. Designed an offline-tolerant replication architecture using open-source technologies \u2014 Debezium, Kafka, and Python services on Kubernetes/EKS.",
-        tags: ["Debezium", "Kafka", "Kubernetes", "EKS", "Python"]
-      },
-      {
-        title: "Warehouse Analytics Pipeline",
-        role: "Senior Data Engineer",
-        description: "Architected and built an analytics pipeline for various BI use cases. Ingested data from CSV files, NFS, and DynamoDB Streams into S3, used AWS Glue jobs to transform and move data into a lakehouse, and created BI dashboards with AWS QuickSight.",
-        tags: ["AWS Glue", "S3", "DynamoDB Streams", "QuickSight", "Lakehouse"]
-      },
-      {
-        title: "OnLeave \u2014 Slack Leave Management",
-        role: "Tech Lead",
-        description: "Leave management application built on top of Slack. Led the team and built the entire backend on AWS serverless services \u2014 DynamoDB, Lambda, API Gateway. Implemented event-driven architecture with SQS and EventBridge. TypeScript backend, React + AWS Amplify frontend.",
-        tags: ["Lambda", "DynamoDB", "SQS", "EventBridge", "TypeScript", "React"]
-      },
-      {
-        title: "DB Migration \u2014 CouchBase to OpenSearch",
-        role: "Data Engineer",
-        description: "Migrated close to 32 million records from CouchBase to OpenSearch with minimal downtime. Built a private API for seamless integration with the rest of the application.",
-        tags: ["OpenSearch", "CouchBase", "Lambda", "API Gateway"]
-      }
-    ];
-  }
-});
-
-// src/components/Projects.tsx
-function Projects() {
-  const sectionRef = useReveal();
-  const { visibleItems: visibleProjects, hasMore, loadMore } = usePagination(PROJECTS, 4, 4, 3);
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-    "section",
-    {
-      id: "projects",
-      ref: sectionRef,
-      className: "relative z-10 py-16 md:py-24 lg:py-32",
-      children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h2", { className: "reveal font-anton text-5xl md:text-6xl text-app-heading mb-16 tracking-tight", children: "PROJECTS" }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex flex-col", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-8", children: visibleProjects.map((project) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
-            "div",
-            {
-              className: "reveal bg-app-card border border-app-border shadow-sm p-8 md:p-10 flex flex-col",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "font-pixel text-brand mb-5 block", children: project.role }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { className: "font-anton text-3xl md:text-4xl text-app-heading leading-tight tracking-tight mb-4", children: project.title }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "text-app-body text-base leading-relaxed flex-1 mb-8", children: project.description }),
-                /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "flex flex-wrap gap-2 mt-auto", children: project.tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-                  "span",
-                  {
-                    className: "text-sm px-3 py-1.5 border border-brand text-brand",
-                    children: tag
-                  },
-                  tag
-                )) })
-              ]
-            },
-            project.title
-          )) }),
-          hasMore && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "mt-12 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-            "button",
-            {
-              onClick: loadMore,
-              className: "px-6 py-3 bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand transition-colors duration-200",
-              children: "VIEW MORE"
-            }
-          ) })
-        ] })
-      ] })
-    }
-  );
-}
-var import_jsx_runtime10;
-var init_Projects = __esm({
-  "src/components/Projects.tsx"() {
-    init_projects();
-    init_useReveal();
-    init_usePagination();
-    import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
-  }
-});
-
-// src/components/Contact.tsx
-function Contact() {
-  const sectionRef = useReveal();
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-    "section",
-    {
-      id: "contact",
-      ref: sectionRef,
-      className: "relative z-10 py-16 md:py-24 lg:py-32",
-      children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6 flex flex-col items-center text-center", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("h2", { className: "reveal font-anton text-5xl md:text-6xl lg:text-8xl text-app-heading leading-none tracking-tight mb-6", children: [
-          "LET'S WORK",
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("br", {}),
-          "TOGETHER"
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "reveal text-app-body text-lg md:text-xl max-w-lg mb-12", children: "Open to collaborations, speaking opportunities, and consulting." }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-          "a",
-          {
-            href: "mailto:rahulkumar@antstack.com",
-            className: "reveal bg-brand hover:bg-brand-dark text-white font-medium text-base px-10 py-4 rounded-full transition-colors duration-200 mb-16",
-            children: "rahulkumar@antstack.com"
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "reveal flex items-center gap-10", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "a",
-            {
-              href: "https://www.linkedin.com/in/kumarahul98/",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              "aria-label": "LinkedIn",
-              className: "text-app-muted hover:text-brand transition-colors duration-200",
-              children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Icon, { name: "linkedin" })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "a",
-            {
-              href: "https://x.com/coolman9633",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              "aria-label": "Twitter / X",
-              className: "text-app-muted hover:text-brand transition-colors duration-200",
-              children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Icon, { name: "twitter" })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "a",
-            {
-              href: "https://github.com/kumarahul98",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              "aria-label": "GitHub",
-              className: "text-app-muted hover:text-brand transition-colors duration-200",
-              children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Icon, { name: "github" })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "a",
-            {
-              href: "https://www.instagram.com/ping_to_passport/",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              "aria-label": "Instagram",
-              className: "text-app-muted hover:text-brand transition-colors duration-200",
-              children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Icon, { name: "instagram" })
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "a",
-            {
-              href: "https://www.antstack.com/author/rahul-kumar/",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              "aria-label": "AntStack blog",
-              className: "text-app-muted hover:text-brand transition-colors duration-200",
-              children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Icon, { name: "antstack" })
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("p", { className: "reveal text-app-muted/60 text-xs font-pixel mt-16", children: [
-          "\xA9 ",
-          (/* @__PURE__ */ new Date()).getFullYear(),
-          " Rahul Kumar"
-        ] })
-      ] })
-    }
-  );
-}
-var import_jsx_runtime11;
-var init_Contact = __esm({
-  "src/components/Contact.tsx"() {
-    init_useReveal();
-    init_Icon();
-    import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
-  }
-});
-
-// src/components/DeferredSections.tsx
-var DeferredSections_exports = {};
-__export(DeferredSections_exports, {
-  default: () => DeferredSections
-});
-function DeferredSections() {
-  const content = useContent();
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Blogs, { data: content.data?.blogs ?? [], loading: content.loading }),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Videos, { data: content.data?.videos ?? [], loading: content.loading }),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Projects, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Contact, {})
-  ] });
-}
-var import_jsx_runtime12;
-var init_DeferredSections = __esm({
-  "src/components/DeferredSections.tsx"() {
-    init_useContent();
-    init_Blogs();
-    init_Videos();
-    init_Projects();
-    init_Contact();
-    import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
-  }
-});
-
 // scripts/prerender.tsx
 var import_promises = require("fs/promises");
 var import_path = require("path");
 var import_server = __toESM(require_server_node(), 1);
 
 // src/App.tsx
-var import_react8 = __toESM(require_react(), 1);
+var import_react10 = __toESM(require_react(), 1);
 
 // src/hooks/useTheme.ts
 var import_react = __toESM(require_react(), 1);
@@ -35333,8 +34672,21 @@ function useTheme() {
   return { dark, toggle: () => setDark((d) => !d) };
 }
 
-// src/App.tsx
-init_gsap2();
+// src/lib/gsap.ts
+var gsapModulesPromise = null;
+function loadGsap() {
+  if (!gsapModulesPromise) {
+    gsapModulesPromise = Promise.all([Promise.resolve().then(() => (init_gsap(), gsap_exports)), Promise.resolve().then(() => (init_ScrollTrigger(), ScrollTrigger_exports))]).then(
+      ([gsapModule, scrollTriggerModule]) => {
+        const gsap4 = gsapModule.default;
+        const { ScrollTrigger: ScrollTrigger3 } = scrollTriggerModule;
+        gsap4.registerPlugin(ScrollTrigger3);
+        return { gsap: gsap4, ScrollTrigger: ScrollTrigger3 };
+      }
+    );
+  }
+  return gsapModulesPromise;
+}
 
 // src/components/Canvas.tsx
 var import_react2 = __toESM(require_react(), 1);
@@ -35462,7 +34814,66 @@ function Canvas() {
 
 // src/components/Nav.tsx
 var import_react3 = __toESM(require_react(), 1);
-init_Icon();
+
+// src/components/ui/Icon.tsx
+var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+function Icon({ name, ...props }) {
+  switch (name) {
+    case "logo":
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { width: "36", height: "36", viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true", ...props, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "3", y: "4", width: "18", height: "14", rx: "2.5", fill: "currentColor", opacity: "0.92" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("rect", { x: "5.25", y: "6.25", width: "13.5", height: "9.5", rx: "1", fill: "#0B1220", opacity: "0.95" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "7.25", cy: "8.25", r: "0.6", fill: "white", opacity: "0.85" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "9.15", cy: "8.25", r: "0.6", fill: "white", opacity: "0.55" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M7.4 10.9l1.7 1.7-1.7 1.7", stroke: "white", strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M10.9 14.3h3.8", stroke: "white", strokeWidth: "1.3", strokeLinecap: "round" })
+      ] });
+    case "sun":
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", ...props, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("circle", { cx: "12", cy: "12", r: "5" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "12", y1: "1", x2: "12", y2: "3" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "12", y1: "21", x2: "12", y2: "23" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "4.22", y1: "4.22", x2: "5.64", y2: "5.64" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "18.36", y1: "18.36", x2: "19.78", y2: "19.78" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "1", y1: "12", x2: "3", y2: "12" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "21", y1: "12", x2: "23", y2: "12" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "4.22", y1: "19.78", x2: "5.64", y2: "18.36" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("line", { x1: "18.36", y1: "5.64", x2: "19.78", y2: "4.22" })
+      ] });
+    case "moon":
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" }) });
+    case "linkedin":
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" }) });
+    case "twitter":
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" }) });
+    case "antstack":
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+        "span",
+        {
+          className: "inline-block h-8 w-8 bg-current",
+          style: {
+            WebkitMaskImage: "url(/Symbol_light.svg)",
+            maskImage: "url(/Symbol_light.svg)",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center",
+            maskPosition: "center",
+            WebkitMaskSize: "contain",
+            maskSize: "contain"
+          },
+          "aria-hidden": "true"
+        }
+      );
+    case "github":
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" }) });
+    case "instagram":
+      return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("svg", { width: "26", height: "26", viewBox: "0 0 24 24", fill: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("path", { d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" }) });
+    default:
+      return null;
+  }
+}
+
+// src/components/Nav.tsx
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
 var NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -35477,7 +34888,7 @@ function Nav({ dark, onToggleTheme }) {
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("nav", { className: "fixed top-0 inset-x-0 z-50 backdrop-blur-md", children: [
     /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "absolute inset-0 pointer-events-none z-0", style: { background: "linear-gradient(to bottom, var(--c-nav-bg) 85%, transparent 100%)" } }),
     /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "relative z-10 max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("a", { href: "#hero", onClick: close, className: "inline-flex items-end gap-1 text-brand", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("a", { href: "#hero", onClick: close, className: "inline-flex items-end gap-1 text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm", children: [
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(Icon, { name: "logo", className: "block h-10 w-10 shrink-0 translate-y-1" }),
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "font-anton text-3xl tracking-wide leading-none pb-[1px]", children: "RK." })
       ] }),
@@ -35486,7 +34897,7 @@ function Nav({ dark, onToggleTheme }) {
           "a",
           {
             href,
-            className: "block px-2 py-2 -mx-2 -my-2 text-base font-semibold text-app-heading drop-shadow-sm hover:text-brand transition-colors duration-200",
+            className: "block px-2 py-2 -mx-2 -my-2 text-base font-semibold text-app-heading drop-shadow-sm hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
             children: label
           }
         ) }, href)) }),
@@ -35495,7 +34906,7 @@ function Nav({ dark, onToggleTheme }) {
           {
             onClick: onToggleTheme,
             "aria-label": dark ? "Switch to light mode" : "Switch to dark mode",
-            className: "w-9 h-9 flex items-center justify-center text-app-heading hover:text-brand transition-colors duration-200",
+            className: "w-9 h-9 flex items-center justify-center text-app-heading hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
             children: dark ? /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("circle", { cx: "12", cy: "12", r: "5" }),
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("line", { x1: "12", y1: "1", x2: "12", y2: "3" }),
@@ -35510,13 +34921,13 @@ function Nav({ dark, onToggleTheme }) {
           }
         )
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "md:hidden flex items-center gap-3", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "md:hidden flex items-center gap-1", children: [
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
           "button",
           {
             onClick: onToggleTheme,
             "aria-label": dark ? "Switch to light mode" : "Switch to dark mode",
-            className: "w-9 h-9 flex items-center justify-center text-app-heading hover:text-brand transition-colors duration-200",
+            className: "w-11 h-11 flex items-center justify-center text-app-heading hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
             children: dark ? /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("circle", { cx: "12", cy: "12", r: "5" }),
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("line", { x1: "12", y1: "1", x2: "12", y2: "3" }),
@@ -35533,7 +34944,7 @@ function Nav({ dark, onToggleTheme }) {
         /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
           "button",
           {
-            className: "flex flex-col justify-center items-center gap-1.5 w-8 h-8",
+            className: "flex flex-col justify-center items-center gap-1.5 w-11 h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
             onClick: () => setOpen((o) => !o),
             "aria-label": "Toggle menu",
             "aria-expanded": open,
@@ -35551,7 +34962,7 @@ function Nav({ dark, onToggleTheme }) {
       {
         href,
         onClick: close,
-        className: "block px-6 py-4 text-base font-semibold text-app-body drop-shadow-sm hover:text-brand hover:bg-app-bg-subtle transition-colors duration-200",
+        className: "block px-6 py-4 min-h-[44px] text-base font-semibold text-app-body drop-shadow-sm hover:text-brand hover:bg-app-bg-subtle active:text-brand active:bg-app-bg-subtle transition-colors duration-200 focus-visible:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-brand",
         children: label
       }
     ) }, href)) })
@@ -35560,7 +34971,6 @@ function Nav({ dark, onToggleTheme }) {
 
 // src/components/Hero.tsx
 var import_react4 = __toESM(require_react(), 1);
-init_gsap2();
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 function Hero() {
   const headingRef = (0, import_react4.useRef)(null);
@@ -35616,7 +35026,7 @@ function Hero() {
     {
       id: "hero",
       className: "relative z-10 w-full",
-      children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "relative w-full h-screen min-h-[600px] overflow-hidden flex flex-col justify-center group", children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "relative w-full h-[100dvh] min-h-[600px] overflow-hidden flex flex-col justify-center group", children: [
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "absolute inset-0 bg-[#0a0a0a] z-0" }),
         /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("picture", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
@@ -35680,7 +35090,7 @@ function Hero() {
               "a",
               {
                 href: "#projects",
-                className: "bg-brand hover:brightness-110 text-white font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 shadow-lg shadow-brand/30 hover:-translate-y-0.5",
+                className: "bg-brand hover:brightness-110 active:brightness-90 active:scale-95 text-white font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 shadow-lg shadow-brand/30 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
                 children: "View Projects \u2193"
               }
             ),
@@ -35688,7 +35098,7 @@ function Hero() {
               "a",
               {
                 href: "#contact",
-                className: "border border-white/25 text-white hover:bg-white hover:text-black font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 backdrop-blur-sm bg-white/5 hover:-translate-y-0.5",
+                className: "border border-white/25 text-white hover:bg-white hover:text-black active:bg-white/20 active:scale-95 font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 backdrop-blur-sm bg-white/5 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
                 children: "Get in Touch"
               }
             )
@@ -35699,8 +35109,65 @@ function Hero() {
   );
 }
 
-// src/components/About.tsx
-init_useReveal();
+// src/hooks/useReveal.ts
+var import_react5 = __toESM(require_react(), 1);
+function useReveal(deps = []) {
+  const ref2 = (0, import_react5.useRef)(null);
+  (0, import_react5.useEffect)(() => {
+    if (!ref2.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let cleanup;
+    let cancelled = false;
+    loadGsap().then(({ gsap: gsap4, ScrollTrigger: ScrollTrigger3 }) => {
+      if (cancelled || !ref2.current) return;
+      const ctx = gsap4.context(() => {
+        gsap4.fromTo(
+          ".reveal",
+          { opacity: 0, y: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power2.out",
+            stagger: 0.12,
+            scrollTrigger: {
+              trigger: ref2.current,
+              start: "top 80%"
+            }
+          }
+        );
+        ScrollTrigger3.refresh();
+      }, ref2);
+      cleanup = () => ctx.revert();
+    });
+    return () => {
+      cancelled = true;
+      cleanup?.();
+    };
+  }, deps);
+  return ref2;
+}
+
+// src/hooks/usePagination.ts
+var import_react6 = __toESM(require_react(), 1);
+function usePagination(items, initialCount, increment, mobileCount = initialCount) {
+  const getPageSize = () => typeof window !== "undefined" && window.innerWidth < 768 ? mobileCount : initialCount;
+  const [visibleCount, setVisibleCount] = (0, import_react6.useState)(getPageSize);
+  (0, import_react6.useEffect)(() => {
+    const onResize = () => {
+      setVisibleCount((prev) => {
+        const nextBaseCount = getPageSize();
+        return Math.max(nextBaseCount, Math.min(prev, items.length));
+      });
+    };
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, [initialCount, mobileCount, items.length]);
+  const visibleItems = items.slice(0, visibleCount);
+  const hasMore = visibleCount < items.length;
+  const loadMore = () => setVisibleCount((prev) => prev + (window.innerWidth < 768 ? mobileCount : increment));
+  return { visibleItems, hasMore, loadMore };
+}
 
 // src/data/about.ts
 var EXPERIENCE = [
@@ -35765,17 +35232,19 @@ var CERTIFICATIONS = [
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 function About() {
   const sectionRef = useReveal();
+  const { visibleItems: visibleExp, hasMore: hasMoreExp, loadMore: loadMoreExp } = usePagination(EXPERIENCE, EXPERIENCE.length, EXPERIENCE.length, 1);
+  const { visibleItems: visibleCerts, hasMore: hasMoreCerts, loadMore: loadMoreCerts } = usePagination(CERTIFICATIONS, CERTIFICATIONS.length, CERTIFICATIONS.length, 2);
   return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
     "section",
     {
       id: "about",
       ref: sectionRef,
       className: "relative z-10 bg-[#162C5A] py-16 md:py-24 lg:py-32",
-      children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6", children: [
+      children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "max-w-7xl mx-auto px-4 md:px-6 lg:px-8", children: [
         /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h2", { className: "reveal font-anton text-5xl md:text-6xl lg:text-7xl text-white mb-16 tracking-tight", children: "ABOUT" }),
         /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-20", children: [
           /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10", children: "Experience" }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "flex flex-col gap-12", children: EXPERIENCE.map((job) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "reveal flex flex-col md:flex-row gap-4 md:gap-8 group hover:-translate-y-1 transition-all duration-300 p-6 md:p-8 -mx-6 md:-mx-8 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "flex flex-col gap-12", children: visibleExp.map((job) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "reveal flex flex-col md:flex-row gap-4 md:gap-8 group hover:-translate-y-1 active:bg-white/5 transition-all duration-300 p-6 md:p-8 -mx-6 md:-mx-8 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 active:border-white/10", children: [
             /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "md:w-56 shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "font-pixel text-base md:text-lg text-brand leading-relaxed group-hover:brightness-125 transition-all duration-300", children: job.period }) }),
             /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex-1 border-l-2 border-brand pl-6 group-hover:border-white transition-colors duration-300", children: [
               /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "font-anton text-2xl md:text-3xl text-white tracking-tight mb-1 group-hover:text-brand-light transition-colors duration-300", children: job.role }),
@@ -35786,11 +35255,26 @@ function About() {
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("ul", { className: "flex flex-col gap-3", children: job.bullets.map((b, i) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("li", { className: "text-base md:text-lg text-white/70 leading-relaxed pl-3 border-l border-white/10", children: b }, i)) })
             ] })
-          ] }, job.company)) })
+          ] }, job.company)) }),
+          hasMoreExp && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "mt-8 flex justify-center md:hidden", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "button",
+            {
+              onClick: loadMoreExp,
+              className: "px-6 py-3 min-h-[44px] border border-white/20 text-white/70 font-pixel text-sm hover:border-white/40 hover:text-white active:border-white/40 active:text-white active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+              children: "VIEW MORE"
+            }
+          ) })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-20", children: [
           /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10", children: "Skills" }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8", children: SKILLS.map(({ category, items }) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "reveal", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "reveal flex flex-wrap gap-3 md:hidden", children: SKILLS.map(({ category, items }) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex flex-col gap-1 border border-brand/40 bg-white/5 px-4 py-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "font-pixel text-brand text-xs", children: category }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { className: "text-white/50 text-xs leading-relaxed", children: [
+              items.slice(0, 3).join(" \xB7 "),
+              items.length > 3 ? ` +${items.length - 3}` : ""
+            ] })
+          ] }, category)) }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "hidden md:grid grid-cols-2 gap-8", children: SKILLS.map(({ category, items }) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "reveal", children: [
             /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "font-pixel text-base md:text-lg text-brand mb-4", children: category }),
             /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "flex flex-wrap gap-2", children: items.map((skill) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
               "span",
@@ -35804,10 +35288,10 @@ function About() {
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10", children: "Certifications" }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", children: CERTIFICATIONS.map((cert) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", children: visibleCerts.map((cert) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
             "div",
             {
-              className: "reveal bg-white/5 border border-white/10 p-6 hover:bg-white/10 hover:border-brand/40 transition-all duration-300 hover:-translate-y-1 group",
+              className: "reveal bg-white/5 border border-white/10 p-6 hover:bg-white/10 hover:border-brand/40 active:bg-white/10 active:border-brand/40 transition-all duration-300 hover:-translate-y-1 group",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "font-pixel text-base md:text-lg text-brand block mb-4 group-hover:scale-105 origin-left transition-transform duration-300", children: cert.abbr }),
                 /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-base md:text-lg font-medium text-white leading-snug mb-2 group-hover:text-brand-light transition-colors duration-300", children: cert.name }),
@@ -35819,32 +35303,571 @@ function About() {
               ]
             },
             cert.abbr
-          )) })
+          )) }),
+          hasMoreCerts && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "mt-8 flex justify-center md:hidden", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+            "button",
+            {
+              onClick: loadMoreCerts,
+              className: "px-6 py-3 min-h-[44px] border border-white/20 text-white/70 font-pixel text-sm hover:border-white/40 hover:text-white active:border-white/40 active:text-white active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+              children: "VIEW MORE"
+            }
+          ) })
         ] })
       ] })
     }
   );
 }
 
-// src/components/SectionPlaceholder.tsx
-var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-function SectionPlaceholder({ subtle = false }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-    "div",
+// src/content/generated.ts
+var contentData = {
+  "blogs": [
     {
-      className: `relative z-10 ${subtle ? "bg-app-bg-subtle" : "bg-app-bg"} h-24 md:h-32`,
-      "aria-hidden": "true"
+      "title": "Optimizing RLS Performance with Supabase (Postgres)",
+      "url": "https://www.antstack.com/blog/optimizing-rls-performance-with-supabase/",
+      "date": "2025-01-13",
+      "description": "Deep dive into Row Level Security performance tuning on Supabase \u2014 indexes, policy design, and query patterns that keep multi-tenant apps fast."
+    },
+    {
+      "title": "Multi-Tenant Applications with RLS on Supabase (Postgres)",
+      "url": "https://www.antstack.com/blog/multi-tenant-applications-with-rls-on-supabase-postgress/",
+      "date": "2024-12-23",
+      "description": "How to architect multi-tenant SaaS apps using Postgres Row Level Security on Supabase \u2014 tenant isolation, policy patterns, and real-world trade-offs."
+    },
+    {
+      "title": "Streaming DynamoDB Data into a Hudi Table: AWS Glue in Action",
+      "url": "https://www.antstack.com/blog/Streaming-DynamoDB-Data-into-a-Hudi-Table/",
+      "date": "2024-10-14",
+      "description": "Step-by-step walkthrough of streaming DynamoDB change data into an Apache Hudi table using AWS Glue, enabling near-real-time lakehouse updates."
+    },
+    {
+      "title": "BigQuery Basics: A Quick Start Guide for Newbies",
+      "url": "https://www.antstack.com/blog/big-query-basics-a-quick-start-guide-for-newbies/",
+      "date": "2024-05-08",
+      "description": "A practical introduction to Google BigQuery \u2014 serverless SQL, partitioning, clustering, and cost control for engineers new to the platform."
+    },
+    {
+      "title": "Getting Started with OpenSearch",
+      "url": "https://www.antstack.com/blog/getting-started-with-open-search/",
+      "date": "2021-10-27",
+      "description": "Introduction to OpenSearch \u2014 setting up clusters, indexing data, and running full-text and aggregation queries on AWS."
+    }
+  ],
+  "videos": [
+    {
+      "title": "AWS re:Invent Highlights: GENAI, S3 Vectors, Nova Models & Durable Lambda | AntStack TV",
+      "url": "https://www.youtube.com/watch?v=LNA-YSUQo6c",
+      "date": "2026-01-21",
+      "description": "Covering S3 Vectors, Bedrock Nova models, Durable Lambda, AgentCore, SageMaker updates, and the new Security Agents from AWS re:Invent.",
+      "duration": "21:30",
+      "views": "146"
+    },
+    {
+      "title": "Cloudflare's Quiet Shift into an AI + Data Platform \u2014 Workers, R2, AI Gateway Explained | AntStack TV",
+      "url": "https://www.youtube.com/watch?v=H2vWM8M_5TM",
+      "date": "2026-01-07",
+      "description": "Breaking down Cloudflare's evolution into an AI and data platform \u2014 Workers, R2, D1, AI Gateway, RAG, Apache Iceberg, and Remote MCP.",
+      "duration": "18:21",
+      "views": "303"
+    },
+    {
+      "title": "AntStack TV | Episode 7 | Rahul Kumar Breaks Down AWS re:Invent's Biggest Data Engineering Reveals",
+      "url": "https://www.youtube.com/watch?v=_qRWFOOZ7v4",
+      "date": "2025-01-29",
+      "description": "S3 Tables, SageMaker Lake House, Zero-ETL, AWS Glue 5.0, DynamoDB Global Tables, Aurora DSQL, and QuickSight AI \u2014 all the data engineering highlights from re:Invent.",
+      "duration": "12:15",
+      "views": "275"
+    },
+    {
+      "title": "AntStack TV | Episode 4 | BigQuery: Google's Data Warehouse Service",
+      "url": "https://www.youtube.com/watch?v=h_ptY7WGJb8",
+      "date": "2024-10-09",
+      "description": "Exploring Google BigQuery as a serverless data warehouse \u2014 SQL engine, BI Engine, real-time streaming, and how it compares to AWS alternatives.",
+      "duration": "11:53",
+      "views": "330"
+    },
+    {
+      "title": "Getting Started with DynamoDB Single Table Design with a Real-Life Case Study",
+      "url": "https://www.youtube.com/watch?v=71OCX9d8ed8",
+      "date": "2023-08-30",
+      "description": "A comprehensive 47-minute deep dive into DynamoDB single table design \u2014 primary key modeling, entity organization, access patterns, and a real-world case study.",
+      "duration": "47:32",
+      "views": "2300"
+    },
+    {
+      "title": "Efficient ETL on the Cloud: Embracing the Serverless Paradigm \u2014 AWS Community Day Kochi 2023",
+      "url": "https://www.youtube.com/watch?v=1eS83MzrfgE",
+      "date": "2023-01-01",
+      "description": "Conference talk at AWS Community Day Kochi 2023 on building serverless ETL pipelines on AWS \u2014 Lambda, Glue, Step Functions, and event-driven patterns.",
+      "duration": "26:58",
+      "views": "41"
+    },
+    {
+      "title": "AWS OpenSearch \u2014 Building a Search Engine for your Data, with OpenSearch",
+      "url": "https://www.youtube.com/watch?v=KvEdRSJ2shQ",
+      "date": "2022-02-23",
+      "description": "Get started with OpenSearch basics and build a search engine for your data using OpenSearch queries.",
+      "views": "30622"
+    }
+  ],
+  "links": []
+};
+
+// src/hooks/useContent.ts
+function useContent() {
+  return {
+    data: contentData,
+    loading: false
+  };
+}
+
+// src/components/Blogs.tsx
+var import_react7 = __toESM(require_react(), 1);
+
+// src/components/ui/SkeletonCard.tsx
+var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+function SkeletonCard({ hasImage = false }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "bg-app-card border border-app-border animate-pulse flex flex-col", children: [
+    hasImage && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "w-full aspect-video bg-app-border" }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: hasImage ? "p-5" : "p-6", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "h-3 bg-app-border rounded mb-5 w-1/3" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "h-6 bg-app-border rounded mb-4 w-3/4" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "h-4 bg-app-border rounded mb-2 w-full" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "h-4 bg-app-border rounded w-2/3" })
+    ] })
+  ] });
+}
+
+// src/components/Blogs.tsx
+var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+function BlogCard({ post }) {
+  const [expanded, setExpanded] = (0, import_react7.useState)(false);
+  const [overflows, setOverflows] = (0, import_react7.useState)(false);
+  const descRef = (0, import_react7.useRef)(null);
+  (0, import_react7.useEffect)(() => {
+    const el = descRef.current;
+    if (el) setOverflows(el.scrollHeight > el.clientHeight);
+  }, [post.description]);
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "reveal group relative bg-app-card border border-app-border shadow-sm p-6 flex flex-col hover:border-brand/40 active:border-brand/40 transition-colors duration-200", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      "a",
+      {
+        href: post.url,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "absolute inset-0 z-0",
+        tabIndex: -1,
+        "aria-hidden": "true"
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "relative z-10 font-pixel text-app-muted mb-4 block", children: new Date(post.date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { className: "relative z-10 text-app-heading font-semibold text-lg md:text-xl leading-snug mb-3 group-hover:text-brand transition-colors duration-200", children: post.title }),
+    post.description && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "relative z-10 mb-4 flex-1", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        "p",
+        {
+          ref: descRef,
+          className: `text-app-body text-base md:text-lg leading-relaxed ${expanded ? "" : "line-clamp-3"}`,
+          children: post.description
+        }
+      ),
+      (overflows || expanded) && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        "button",
+        {
+          onClick: () => setExpanded((e) => !e),
+          className: "mt-1 text-brand text-sm font-medium hover:brightness-125 active:brightness-90 transition-all focus-visible:outline-none",
+          children: expanded ? "Show less \u2191" : "Read more \u2193"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      "a",
+      {
+        href: post.url,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "relative z-10 text-brand text-base font-medium mt-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand",
+        children: "Read \u2192"
+      }
+    )
+  ] });
+}
+function Blogs({ data, loading }) {
+  const sectionRef = useReveal([data]);
+  const sorted = [...data].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  const { visibleItems: visibleBlogs, hasMore, loadMore } = usePagination(sorted, 6, 6, 2);
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+    "section",
+    {
+      id: "blogs",
+      ref: sectionRef,
+      className: "relative z-10 py-16 md:py-24 lg:py-32",
+      children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "reveal font-anton text-5xl md:text-6xl lg:text-7xl text-app-heading mb-16 tracking-tight", children: "WRITINGS" }),
+        loading ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: Array.from({ length: 6 }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(SkeletonCard, {}, i)) }) : sorted.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-base text-app-muted", children: "No writings yet \u2014 check back soon." }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex flex-col", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: visibleBlogs.map((post) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(BlogCard, { post }, post.url)) }),
+          hasMore && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "mt-12 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+            "button",
+            {
+              onClick: loadMore,
+              className: "px-6 py-3 min-h-[44px] bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand active:border-brand active:text-brand active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand",
+              children: "VIEW MORE"
+            }
+          ) })
+        ] })
+      ] })
     }
   );
 }
 
+// src/components/Videos.tsx
+var import_react8 = __toESM(require_react(), 1);
+var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
+function getYouTubeId(url) {
+  const match = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+function VideoCard({ video, id }) {
+  const [imgError, setImgError] = (0, import_react8.useState)(false);
+  const [expanded, setExpanded] = (0, import_react8.useState)(false);
+  const [overflows, setOverflows] = (0, import_react8.useState)(false);
+  const descRef = (0, import_react8.useRef)(null);
+  (0, import_react8.useEffect)(() => {
+    const el = descRef.current;
+    if (el) setOverflows(el.scrollHeight > el.clientHeight);
+  }, [video.description]);
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "reveal group relative bg-app-card border border-app-border shadow-sm flex flex-col hover:border-brand/40 active:border-brand/40 transition-colors duration-200", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+      "a",
+      {
+        href: video.url,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "absolute inset-0 z-0",
+        tabIndex: -1,
+        "aria-hidden": "true"
+      }
+    ),
+    id && !imgError ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+      "img",
+      {
+        src: `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
+        srcSet: `https://img.youtube.com/vi/${id}/mqdefault.jpg 320w, https://img.youtube.com/vi/${id}/hqdefault.jpg 480w`,
+        sizes: "(max-width: 768px) 320px, 480px",
+        alt: video.title,
+        width: "480",
+        height: "360",
+        loading: "lazy",
+        decoding: "async",
+        className: "relative z-10 w-full aspect-video object-cover",
+        onError: () => setImgError(true)
+      }
+    ) : /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+      "div",
+      {
+        className: "relative z-10 w-full aspect-video bg-[#5C8DF2]/10 flex items-center justify-center",
+        "aria-hidden": "true",
+        children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-brand text-4xl", children: "\u25B6" })
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "relative z-10 p-5 flex flex-col flex-1", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex items-center gap-3 mb-3", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "font-pixel text-app-muted", children: (/* @__PURE__ */ new Date(video.date + "T12:00:00")).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short"
+        }) }),
+        video.duration && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "font-pixel text-app-muted", children: video.duration })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { className: "text-app-heading font-semibold text-lg leading-snug mb-3 group-hover:text-brand transition-colors duration-200 flex-1", children: video.title }),
+      video.description && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "mb-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+          "p",
+          {
+            ref: descRef,
+            className: `text-app-body text-base leading-relaxed ${expanded ? "" : "line-clamp-3"}`,
+            children: video.description
+          }
+        ),
+        (overflows || expanded) && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+          "button",
+          {
+            onClick: () => setExpanded((e) => !e),
+            className: "mt-1 text-brand text-sm font-medium hover:brightness-125 active:brightness-90 transition-all focus-visible:outline-none",
+            children: expanded ? "Show less \u2191" : "Read more \u2193"
+          }
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+        "a",
+        {
+          href: video.url,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "text-brand text-base font-medium mt-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand",
+          children: "Watch \u2192"
+        }
+      )
+    ] })
+  ] });
+}
+function Videos({ data, loading }) {
+  const sectionRef = useReveal([data]);
+  const sorted = [...data].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  const { visibleItems: visibleVideos, hasMore, loadMore } = usePagination(sorted, 6, 6, 2);
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    "section",
+    {
+      id: "videos",
+      ref: sectionRef,
+      className: "relative z-10 bg-app-bg-subtle py-16 md:py-24 lg:py-32",
+      children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { className: "reveal font-anton text-5xl md:text-6xl text-app-heading mb-16 tracking-tight", children: "TALKS & VIDEOS" }),
+        loading ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: Array.from({ length: 6 }).map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(SkeletonCard, { hasImage: true }, i)) }) : sorted.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-base text-app-muted", children: "No videos yet \u2014 check back soon." }) : /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex flex-col", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: visibleVideos.map((video) => {
+            const id = getYouTubeId(video.url);
+            return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(VideoCard, { video, id }, video.url + video.title);
+          }) }),
+          hasMore && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "mt-12 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            "button",
+            {
+              onClick: loadMore,
+              className: "px-6 py-3 min-h-[44px] bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand active:border-brand active:text-brand active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand",
+              children: "VIEW MORE"
+            }
+          ) })
+        ] })
+      ] })
+    }
+  );
+}
+
+// src/components/Projects.tsx
+var import_react9 = __toESM(require_react(), 1);
+
+// src/data/projects.ts
+var PROJECTS = [
+  {
+    title: "Health Tech \u2014 FHIR ETL Pipeline",
+    role: "Principal Solutions Architect",
+    description: "Health tech app for doctors to manage patients. Architected a scalable ETL pipeline to process FHIR healthcare data, perform patient metric calculations, enrich datasets with derived metrics, and synchronize with the application layer. Built integrations with multiple EMR systems over FHIR APIs using AWS and Databricks \u2014 EventBridge, Step Functions, S3, and Databricks Serverless.",
+    tags: ["AWS", "Databricks", "FHIR", "Step Functions", "EventBridge", "S3"]
+  },
+  {
+    title: "Counterfeit Detection Platform",
+    role: "Principal Solutions Architect",
+    description: "Tool to stop counterfeit products by detecting unauthorized listings using images. Led development of a scalable batch-processing system on AWS, implementing job orchestration for AWS Bedrock batch inference using Lambda, EventBridge, DynamoDB, and S3.",
+    tags: ["AWS Bedrock", "Lambda", "DynamoDB", "EventBridge", "GenAI"]
+  },
+  {
+    title: "Global Cruise Replication Engine",
+    role: "Principal Solutions Architect",
+    description: "Replication Engine POC for a global cruise operator to synchronize data between shore and ship environments. Designed an offline-tolerant replication architecture using open-source technologies \u2014 Debezium, Kafka, and Python services on Kubernetes/EKS.",
+    tags: ["Debezium", "Kafka", "Kubernetes", "EKS", "Python"]
+  },
+  {
+    title: "Warehouse Analytics Pipeline",
+    role: "Senior Data Engineer",
+    description: "Architected and built an analytics pipeline for various BI use cases. Ingested data from CSV files, NFS, and DynamoDB Streams into S3, used AWS Glue jobs to transform and move data into a lakehouse, and created BI dashboards with AWS QuickSight.",
+    tags: ["AWS Glue", "S3", "DynamoDB Streams", "QuickSight", "Lakehouse"]
+  },
+  {
+    title: "OnLeave \u2014 Slack Leave Management",
+    role: "Tech Lead",
+    description: "Leave management application built on top of Slack. Led the team and built the entire backend on AWS serverless services \u2014 DynamoDB, Lambda, API Gateway. Implemented event-driven architecture with SQS and EventBridge. TypeScript backend, React + AWS Amplify frontend.",
+    tags: ["Lambda", "DynamoDB", "SQS", "EventBridge", "TypeScript", "React"]
+  },
+  {
+    title: "DB Migration \u2014 CouchBase to OpenSearch",
+    role: "Data Engineer",
+    description: "Migrated close to 32 million records from CouchBase to OpenSearch with minimal downtime. Built a private API for seamless integration with the rest of the application.",
+    tags: ["OpenSearch", "CouchBase", "Lambda", "API Gateway"]
+  }
+];
+
+// src/components/Projects.tsx
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+function ProjectCard({ project }) {
+  const [expanded, setExpanded] = (0, import_react9.useState)(false);
+  const [overflows, setOverflows] = (0, import_react9.useState)(false);
+  const descRef = (0, import_react9.useRef)(null);
+  (0, import_react9.useEffect)(() => {
+    const el = descRef.current;
+    if (el) setOverflows(el.scrollHeight > el.clientHeight);
+  }, [project.description]);
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "reveal bg-app-card border border-app-border shadow-sm p-8 md:p-10 flex flex-col", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "font-pixel text-brand mb-5 block", children: project.role }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h3", { className: "font-anton text-3xl md:text-4xl text-app-heading leading-tight tracking-tight mb-4", children: project.title }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex-1 mb-8", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        "p",
+        {
+          ref: descRef,
+          className: `text-app-body text-base leading-relaxed ${expanded ? "" : "line-clamp-3"}`,
+          children: project.description
+        }
+      ),
+      (overflows || expanded) && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        "button",
+        {
+          onClick: () => setExpanded((e) => !e),
+          className: "mt-1 text-brand text-sm font-medium hover:brightness-125 active:brightness-90 transition-all focus-visible:outline-none",
+          children: expanded ? "Show less \u2191" : "Read more \u2193"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "flex flex-wrap gap-2 mt-auto", children: project.tags.map((tag) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+      "span",
+      {
+        className: "text-sm px-3 py-1.5 border border-brand text-brand",
+        children: tag
+      },
+      tag
+    )) })
+  ] });
+}
+function Projects() {
+  const sectionRef = useReveal();
+  const { visibleItems: visibleProjects, hasMore, loadMore } = usePagination(PROJECTS, 4, 4, 2);
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+    "section",
+    {
+      id: "projects",
+      ref: sectionRef,
+      className: "relative z-10 py-16 md:py-24 lg:py-32",
+      children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h2", { className: "reveal font-anton text-5xl md:text-6xl text-app-heading mb-16 tracking-tight", children: "PROJECTS" }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex flex-col", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-8", children: visibleProjects.map((project) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(ProjectCard, { project }, project.title)) }),
+          hasMore && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "mt-12 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+            "button",
+            {
+              onClick: loadMore,
+              className: "px-6 py-3 min-h-[44px] bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand active:border-brand active:text-brand active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand",
+              children: "VIEW MORE"
+            }
+          ) })
+        ] })
+      ] })
+    }
+  );
+}
+
+// src/components/Contact.tsx
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+function Contact() {
+  const sectionRef = useReveal();
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    "section",
+    {
+      id: "contact",
+      ref: sectionRef,
+      className: "relative z-10 py-16 md:py-24 lg:py-32",
+      children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "max-w-7xl mx-auto px-2 md:px-4 lg:px-6 flex flex-col items-center text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("h2", { className: "reveal font-anton text-5xl md:text-6xl lg:text-8xl text-app-heading leading-none tracking-tight mb-6", children: [
+          "LET'S WORK",
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("br", {}),
+          "TOGETHER"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "reveal text-app-body text-lg md:text-xl max-w-lg mb-12", children: "Open to collaborations, speaking opportunities, and consulting." }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          "a",
+          {
+            href: "mailto:rahulkumar@antstack.com",
+            className: "reveal bg-brand hover:bg-brand-dark active:bg-brand-dark active:scale-95 text-white font-medium text-base px-10 py-4 rounded-full transition-all duration-200 mb-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg",
+            children: "rahulkumar@antstack.com"
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "reveal flex items-center gap-10", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            "a",
+            {
+              href: "https://www.linkedin.com/in/kumarahul98/",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              "aria-label": "LinkedIn",
+              className: "p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
+              children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Icon, { name: "linkedin" })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            "a",
+            {
+              href: "https://x.com/coolman9633",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              "aria-label": "Twitter / X",
+              className: "p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
+              children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Icon, { name: "twitter" })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            "a",
+            {
+              href: "https://github.com/kumarahul98",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              "aria-label": "GitHub",
+              className: "p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
+              children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Icon, { name: "github" })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            "a",
+            {
+              href: "https://www.instagram.com/ping_to_passport/",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              "aria-label": "Instagram",
+              className: "p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
+              children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Icon, { name: "instagram" })
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+            "a",
+            {
+              href: "https://www.antstack.com/author/rahul-kumar/",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              "aria-label": "AntStack blog",
+              className: "p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm",
+              children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(Icon, { name: "antstack" })
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("p", { className: "reveal text-app-muted/60 text-xs font-pixel mt-16", children: [
+          "\xA9 ",
+          (/* @__PURE__ */ new Date()).getFullYear(),
+          " Rahul Kumar"
+        ] })
+      ] })
+    }
+  );
+}
+
+// src/components/DeferredSections.tsx
+var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+function DeferredSections() {
+  const content = useContent();
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Blogs, { data: content.data?.blogs ?? [], loading: content.loading }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Videos, { data: content.data?.videos ?? [], loading: content.loading }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Projects, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Contact, {})
+  ] });
+}
+
 // src/App.tsx
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
-var DeferredSections2 = (0, import_react8.lazy)(() => Promise.resolve().then(() => (init_DeferredSections(), DeferredSections_exports)));
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 function App() {
   const { dark, toggle } = useTheme();
-  const [showDeferredSections, setShowDeferredSections] = (0, import_react8.useState)(false);
-  (0, import_react8.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     let timer;
     const onResize = () => {
       if (timer) clearTimeout(timer);
@@ -35858,45 +35881,103 @@ function App() {
       window.removeEventListener("resize", onResize);
     };
   }, []);
-  (0, import_react8.useEffect)(() => {
-    const win = window;
-    let idleId = null;
-    let timeoutId = null;
-    if (typeof win.requestIdleCallback === "function") {
-      idleId = win.requestIdleCallback(() => setShowDeferredSections(true), { timeout: 1200 });
+  (0, import_react10.useEffect)(() => {
+    let cancelled = false;
+    const loader = document.getElementById("app-loader");
+    const brain = loader?.querySelector(".app-loader__brain");
+    const heroImage = document.querySelector("#hero img");
+    let progress = 0;
+    let driftTimer = null;
+    let paintRaf = 0;
+    let removeTimer = null;
+    const setLoaderProgress = (value, immediate = false) => {
+      progress = value;
+      if (immediate) {
+        brain?.style.setProperty("transition-duration", "0ms");
+      }
+      brain?.style.setProperty("--brain-progress", `${value}%`);
+      if (immediate) {
+        window.requestAnimationFrame(() => {
+          brain?.style.removeProperty("transition-duration");
+        });
+      }
+    };
+    const advanceTo = (target) => {
+      if (target <= progress) return;
+      setLoaderProgress(target);
+    };
+    const hideLoader = () => {
+      advanceTo(100);
+      paintRaf = window.requestAnimationFrame(() => {
+        paintRaf = window.requestAnimationFrame(() => {
+          if (!cancelled && loader) {
+            loader.classList.add("is-hidden");
+            removeTimer = window.setTimeout(() => loader.remove(), 360);
+          }
+        });
+      });
+    };
+    const stopDrift = () => {
+      if (driftTimer) {
+        clearInterval(driftTimer);
+        driftTimer = null;
+      }
+    };
+    setLoaderProgress(4, true);
+    if ("fonts" in document) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) advanceTo(24);
+      });
     } else {
-      timeoutId = setTimeout(() => setShowDeferredSections(true), 400);
+      advanceTo(18);
+    }
+    driftTimer = window.setInterval(() => {
+      const next = Math.min(progress + (progress < 40 ? 2.4 : 1.2), 58);
+      if (next > progress) {
+        setLoaderProgress(next);
+      }
+      if (next >= 58) {
+        stopDrift();
+      }
+    }, 180);
+    const onHeroReady = () => {
+      stopDrift();
+      advanceTo(84);
+      hideLoader();
+    };
+    if (heroImage?.complete) {
+      onHeroReady();
+    } else if (heroImage) {
+      heroImage.addEventListener("load", onHeroReady, { once: true });
+      heroImage.addEventListener("error", onHeroReady, { once: true });
     }
     return () => {
-      if (timeoutId !== null) {
-        clearTimeout(timeoutId);
-      }
-      if (idleId !== null && typeof win.cancelIdleCallback === "function") {
-        win.cancelIdleCallback(idleId);
+      cancelled = true;
+      stopDrift();
+      if (paintRaf) window.cancelAnimationFrame(paintRaf);
+      if (removeTimer !== null) clearTimeout(removeTimer);
+      if (heroImage) {
+        heroImage.removeEventListener("load", onHeroReady);
+        heroImage.removeEventListener("error", onHeroReady);
       }
     };
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "relative min-h-screen bg-app-bg text-app-heading", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Canvas, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Nav, { dark, onToggleTheme: toggle }),
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("main", { className: "relative z-10", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Hero, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(About, {}),
-      showDeferredSections ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_react8.Suspense, { fallback: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(SectionPlaceholder, { subtle: true }), children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(DeferredSections2, {}) }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(SectionPlaceholder, { subtle: true }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(SectionPlaceholder, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(SectionPlaceholder, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(SectionPlaceholder, {})
-      ] })
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "relative min-h-screen bg-app-bg text-app-heading", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Canvas, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Nav, { dark, onToggleTheme: toggle }),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("main", { className: "relative z-10", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Hero, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(About, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(DeferredSections, {})
     ] })
   ] });
 }
 
 // scripts/prerender.tsx
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
 async function main() {
   const distIndexPath = (0, import_path.resolve)(process.cwd(), "dist/index.html");
-  const appHtml = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime14.jsx)(App, {}));
+  const appHtml = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime13.jsx)(App, {}));
   const indexHtml = await (0, import_promises.readFile)(distIndexPath, "utf8");
   const prerenderedHtml = indexHtml.replace(
     '<div id="root"></div>',

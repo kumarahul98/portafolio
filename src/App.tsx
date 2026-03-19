@@ -1,17 +1,14 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTheme } from './hooks/useTheme'
 import { loadGsap } from './lib/gsap'
 import Canvas from './components/Canvas'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
-import SectionPlaceholder from './components/SectionPlaceholder'
-
-const DeferredSections = lazy(() => import('./components/DeferredSections'))
+import DeferredSections from './components/DeferredSections'
 
 export default function App() {
   const { dark, toggle } = useTheme()
-  const [showDeferredSections, setShowDeferredSections] = useState(false)
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | undefined
@@ -29,26 +26,93 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const win = window as Window & {
-      requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number
-      cancelIdleCallback?: (handle: number) => void
+    let cancelled = false
+    const loader = document.getElementById('app-loader')
+    const brain = loader?.querySelector<HTMLElement>('.app-loader__brain')
+    const heroImage = document.querySelector<HTMLImageElement>('#hero img')
+    let progress = 0
+    let driftTimer: ReturnType<typeof setInterval> | null = null
+    let paintRaf = 0
+    let removeTimer: ReturnType<typeof setTimeout> | null = null
+
+    const setLoaderProgress = (value: number, immediate = false) => {
+      progress = value
+      if (immediate) {
+        brain?.style.setProperty('transition-duration', '0ms')
+      }
+      brain?.style.setProperty('--brain-progress', `${value}%`)
+      if (immediate) {
+        window.requestAnimationFrame(() => {
+          brain?.style.removeProperty('transition-duration')
+        })
+      }
     }
 
-    let idleId: number | null = null
-    let timeoutId: ReturnType<typeof setTimeout> | null = null
+    const advanceTo = (target: number) => {
+      if (target <= progress) return
+      setLoaderProgress(target)
+    }
 
-    if (typeof win.requestIdleCallback === 'function') {
-      idleId = win.requestIdleCallback(() => setShowDeferredSections(true), { timeout: 600 })
+    const hideLoader = () => {
+      advanceTo(100)
+      paintRaf = window.requestAnimationFrame(() => {
+        paintRaf = window.requestAnimationFrame(() => {
+          if (!cancelled && loader) {
+            loader.classList.add('is-hidden')
+            removeTimer = window.setTimeout(() => loader.remove(), 360)
+          }
+        })
+      })
+    }
+
+    const stopDrift = () => {
+      if (driftTimer) {
+        clearInterval(driftTimer)
+        driftTimer = null
+      }
+    }
+
+    setLoaderProgress(4, true)
+
+    if ('fonts' in document) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) advanceTo(24)
+      })
     } else {
-      timeoutId = setTimeout(() => setShowDeferredSections(true), 200)
+      advanceTo(18)
+    }
+
+    driftTimer = window.setInterval(() => {
+      const next = Math.min(progress + (progress < 40 ? 2.4 : 1.2), 58)
+      if (next > progress) {
+        setLoaderProgress(next)
+      }
+      if (next >= 58) {
+        stopDrift()
+      }
+    }, 180)
+
+    const onHeroReady = () => {
+      stopDrift()
+      advanceTo(84)
+      hideLoader()
+    }
+
+    if (heroImage?.complete) {
+      onHeroReady()
+    } else if (heroImage) {
+      heroImage.addEventListener('load', onHeroReady, { once: true })
+      heroImage.addEventListener('error', onHeroReady, { once: true })
     }
 
     return () => {
-      if (timeoutId !== null) {
-        clearTimeout(timeoutId)
-      }
-      if (idleId !== null && typeof win.cancelIdleCallback === 'function') {
-        win.cancelIdleCallback(idleId)
+      cancelled = true
+      stopDrift()
+      if (paintRaf) window.cancelAnimationFrame(paintRaf)
+      if (removeTimer !== null) clearTimeout(removeTimer)
+      if (heroImage) {
+        heroImage.removeEventListener('load', onHeroReady)
+        heroImage.removeEventListener('error', onHeroReady)
       }
     }
   }, [])
@@ -60,18 +124,7 @@ export default function App() {
       <main className="relative z-10">
         <Hero />
         <About />
-        {showDeferredSections ? (
-          <Suspense fallback={<SectionPlaceholder subtle />}>
-            <DeferredSections />
-          </Suspense>
-        ) : (
-          <>
-            <SectionPlaceholder subtle />
-            <SectionPlaceholder />
-            <SectionPlaceholder />
-            <SectionPlaceholder />
-          </>
-        )}
+        <DeferredSections />
       </main>
     </div>
   )
