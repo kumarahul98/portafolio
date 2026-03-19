@@ -131,15 +131,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
 
       {/* Mobile menu */}
       {open && (
-        <ul className="md:hidden flex flex-col border-t border-app-border bg-app-bg">
-          <li>
-            <button
-              onClick={() => { window.print(); close() }}
-              className="w-full text-left block px-6 py-4 min-h-[44px] text-base font-semibold text-app-muted hover:text-brand hover:bg-app-bg-subtle active:text-brand active:bg-app-bg-subtle transition-colors duration-200 focus-visible:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-brand"
-            >
-              ↓ Download Resume
-            </button>
-          </li>
+        <ul className="relative z-10 md:hidden flex flex-col border-t border-app-border bg-app-bg">
           {NAV_LINKS.map(({ label, href }) => (
             <li key={href}>
               <a
@@ -154,6 +146,14 @@ export default function Nav({ dark, onToggleTheme }: Props) {
               </a>
             </li>
           ))}
+          <li>
+            <button
+              onClick={() => { printResume(); close() }}
+              className="w-full text-left block px-6 py-4 min-h-[44px] text-base font-semibold text-app-body drop-shadow-sm hover:text-brand hover:bg-app-bg-subtle active:text-brand active:bg-app-bg-subtle transition-colors duration-200 focus-visible:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-brand"
+            >
+              ↓ Download Resume
+            </button>
+          </li>
         </ul>
       )}
     </nav>

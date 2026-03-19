@@ -62,7 +62,7 @@ export const SKILLS: SkillCategory[] = [
   },
   {
     category: 'Languages & Frameworks',
-    items: ['TypeScript', 'Python', 'React', 'Angular', 'C#', 'ASP.NET'],
+    items: ['TypeScript', 'Python', 'React', 'express'],
   },
   {
     category: 'DevOps & IaC',
