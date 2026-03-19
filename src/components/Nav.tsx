@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import Icon from './ui/Icon'
 interface Props {
   dark: boolean
@@ -14,7 +14,6 @@ const NAV_LINKS = [
 ]
 
 export default function Nav({ dark, onToggleTheme }: Props) {
-  const navRef = useRef<HTMLElement>(null)
   const [open, setOpen] = useState(false)
 
   const close = () => setOpen(false)
@@ -22,10 +21,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
 
 
   return (
-    <nav
-      ref={navRef}
-      className="fixed top-0 inset-x-0 z-50 backdrop-blur-md"
-    >
+    <nav className="fixed top-0 inset-x-0 z-50 backdrop-blur-md">
       {/* Nav background: solid on top, fades to transparent at the bottom edge */}
       <div className="absolute inset-0 pointer-events-none z-0" style={{ background: 'linear-gradient(to bottom, var(--c-nav-bg) 85%, transparent 100%)' }} />
       <div className="relative z-10 max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between">

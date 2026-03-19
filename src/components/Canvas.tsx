@@ -22,8 +22,6 @@ export default function Canvas() {
     let angle = 0
     let rafId = 0
     let needsRender = true
-    let isInteractive = false
-
     document.body.classList.add('cursor-rocket')
 
     const resize = () => {
@@ -52,11 +50,9 @@ export default function Canvas() {
       y = e.clientY
       previousX = x
       previousY = y
-      isInteractive = Boolean(interactiveTarget)
 
       if (rocket) {
-        rocket.dataset.interactive = isInteractive ? 'true' : 'false'
-        rocket.style.transform = `translate(${x - 14}px, ${y - 14}px) rotate(${angle + Math.PI / 2}rad) scale(${isInteractive ? 0 : 1})`
+        rocket.style.transform = `translate(${x - 14}px, ${y - 14}px) rotate(${angle + Math.PI / 2}rad) scale(${interactiveTarget ? 0 : 1})`
       }
 
       needsRender = true
@@ -93,7 +89,6 @@ export default function Canvas() {
 
     scheduleDraw()
     if (rocket) {
-      rocket.dataset.interactive = 'false'
       rocket.style.transform = `translate(${x - 14}px, ${y - 14}px) rotate(${Math.PI / 2}rad) scale(1)`
     }
     window.addEventListener('pointermove', onPointerMove, { passive: true })
