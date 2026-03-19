@@ -3,7 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- Anti-FOUC: apply theme class before any paint so prerendered HTML shows correct theme -->
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <!-- Critical background: prevents white flash before Tailwind CSS file loads -->
+    <style>
+      html { background: #0c1a30 }
+      html:not(.dark) { background: #ffffff }
+    </style>
     <meta name="description" content="Rahul Kumar — Principal Solutions Architect at AntStack. Builds scalable cloud-native solutions on AWS. Serverless, DevOps, GenAI." />
     <meta name="keywords" content="Rahul Kumar, Principal Solutions Architect, AntStack, AWS, Serverless, DevOps, GenAI, Databricks, Full Stack Developer" />
     <meta name="author" content="Rahul Kumar" />

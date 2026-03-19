@@ -21,7 +21,7 @@ export default function Contact() {
 
         <a
           href="mailto:rahulkumar@antstack.com"
-          className="reveal bg-brand hover:bg-brand-dark text-white font-medium text-base px-10 py-4 rounded-full transition-colors duration-200 mb-16"
+          className="reveal bg-brand hover:bg-brand-dark active:bg-brand-dark active:scale-95 text-white font-medium text-base px-10 py-4 rounded-full transition-all duration-200 mb-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg"
         >
           rahulkumar@antstack.com
         </a>
@@ -34,7 +34,7 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="text-app-muted hover:text-brand transition-colors duration-200"
+            className="p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
           >
             <Icon name="linkedin" />
           </a>
@@ -45,7 +45,7 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Twitter / X"
-            className="text-app-muted hover:text-brand transition-colors duration-200"
+            className="p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
           >
             <Icon name="twitter" />
           </a>
@@ -56,7 +56,7 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="text-app-muted hover:text-brand transition-colors duration-200"
+            className="p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
           >
             <Icon name="github" />
           </a>
@@ -67,7 +67,7 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
-            className="text-app-muted hover:text-brand transition-colors duration-200"
+            className="p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
           >
             <Icon name="instagram" />
           </a>
@@ -78,7 +78,7 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="AntStack blog"
-            className="text-app-muted hover:text-brand transition-colors duration-200"
+            className="p-2 -m-2 text-app-muted hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
           >
             <Icon name="antstack" />
           </a>

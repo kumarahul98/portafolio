@@ -26,7 +26,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
       <div className="absolute inset-0 pointer-events-none z-0" style={{ background: 'linear-gradient(to bottom, var(--c-nav-bg) 85%, transparent 100%)' }} />
       <div className="relative z-10 max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#hero" onClick={close} className="inline-flex items-end gap-1 text-brand">
+        <a href="#hero" onClick={close} className="inline-flex items-end gap-1 text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm">
           <Icon name="logo" className="block h-10 w-10 shrink-0 translate-y-1" />
           <span className="font-anton text-3xl tracking-wide leading-none pb-[1px]">RK.</span>
         </a>
@@ -38,7 +38,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
               <li key={href}>
                 <a
                   href={href}
-                  className="block px-2 py-2 -mx-2 -my-2 text-base font-semibold text-app-heading drop-shadow-sm hover:text-brand transition-colors duration-200"
+                  className="block px-2 py-2 -mx-2 -my-2 text-base font-semibold text-app-heading drop-shadow-sm hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
                 >
                   {label}
                 </a>
@@ -50,7 +50,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
           <button
             onClick={onToggleTheme}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="w-9 h-9 flex items-center justify-center text-app-heading hover:text-brand transition-colors duration-200"
+            className="w-9 h-9 flex items-center justify-center text-app-heading hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
           >
             {dark ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -73,11 +73,11 @@ export default function Nav({ dark, onToggleTheme }: Props) {
         </div>
 
         {/* Mobile: theme toggle + hamburger */}
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-1">
           <button
             onClick={onToggleTheme}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="w-9 h-9 flex items-center justify-center text-app-heading hover:text-brand transition-colors duration-200"
+            className="w-11 h-11 flex items-center justify-center text-app-heading hover:text-brand active:text-brand transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
           >
             {dark ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -99,7 +99,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
           </button>
 
           <button
-            className="flex flex-col justify-center items-center gap-1.5 w-8 h-8"
+            className="flex flex-col justify-center items-center gap-1.5 w-11 h-11 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
             onClick={() => setOpen((o) => !o)}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -119,7 +119,7 @@ export default function Nav({ dark, onToggleTheme }: Props) {
               <a
                 href={href}
                 onClick={close}
-                className="block px-6 py-4 text-base font-semibold text-app-body drop-shadow-sm hover:text-brand hover:bg-app-bg-subtle transition-colors duration-200"
+                className="block px-6 py-4 min-h-[44px] text-base font-semibold text-app-body drop-shadow-sm hover:text-brand hover:bg-app-bg-subtle active:text-brand active:bg-app-bg-subtle transition-colors duration-200 focus-visible:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-brand"
               >
                 {label}
               </a>

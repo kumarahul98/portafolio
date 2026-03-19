@@ -41,6 +41,19 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.3s ease, color 0.3s ease;
+    /* Remove gray flash on tap (iOS/Android) */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Remove 300ms tap delay and prevent callout on long-press for interactive elements */
+  a, button, [role='button'] {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+  }
+
+  /* Safe area padding for the fixed nav on notched/Dynamic Island devices */
+  nav {
+    padding-top: env(safe-area-inset-top, 0px);
   }
 
   @media (min-width: 768px) {

@@ -38,9 +38,9 @@ export default function App() {
     let timeoutId: ReturnType<typeof setTimeout> | null = null
 
     if (typeof win.requestIdleCallback === 'function') {
-      idleId = win.requestIdleCallback(() => setShowDeferredSections(true), { timeout: 1200 })
+      idleId = win.requestIdleCallback(() => setShowDeferredSections(true), { timeout: 600 })
     } else {
-      timeoutId = setTimeout(() => setShowDeferredSections(true), 400)
+      timeoutId = setTimeout(() => setShowDeferredSections(true), 200)
     }
 
     return () => {

@@ -62,7 +62,7 @@ export default function Hero() {
       id="hero"
       className="relative z-10 w-full"
     >
-      <div className="relative w-full h-screen min-h-[600px] overflow-hidden flex flex-col justify-center group">
+      <div className="relative w-full h-[100dvh] min-h-[600px] overflow-hidden flex flex-col justify-center group">
 
         {/* Dark base */}
         <div className="absolute inset-0 bg-[#0a0a0a] z-0" />
@@ -83,7 +83,7 @@ export default function Hero() {
             height="1200"
             fetchPriority="high"
             loading="eager"
-            decoding="async"
+            decoding="sync"
             className="absolute inset-0 w-full h-full object-cover object-[92%_center] sm:object-[87%_center] md:object-center z-0 md:-translate-x-[4%] transition-transform duration-1000 group-hover:scale-105"
           />
         </picture>
@@ -127,13 +127,13 @@ export default function Hero() {
           <div ref={btnsRef} className="flex flex-wrap gap-4">
             <a
               href="#projects"
-              className="bg-brand hover:brightness-110 text-white font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 shadow-lg shadow-brand/30 hover:-translate-y-0.5"
+              className="bg-brand hover:brightness-110 active:brightness-90 active:scale-95 text-white font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 shadow-lg shadow-brand/30 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
             >
               View Projects ↓
             </a>
             <a
               href="#contact"
-              className="border border-white/25 text-white hover:bg-white hover:text-black font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 backdrop-blur-sm bg-white/5 hover:-translate-y-0.5"
+              className="border border-white/25 text-white hover:bg-white hover:text-black active:bg-white/20 active:scale-95 font-medium text-sm md:text-base px-7 py-3.5 rounded-full transition-all duration-300 backdrop-blur-sm bg-white/5 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
             >
               Get in Touch
             </a>

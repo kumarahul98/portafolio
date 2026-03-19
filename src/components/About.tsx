@@ -1,8 +1,11 @@
 import { useReveal } from '../hooks/useReveal'
+import { usePagination } from '../hooks/usePagination'
 import { EXPERIENCE, SKILLS, CERTIFICATIONS } from '../data/about'
 
 export default function About() {
   const sectionRef = useReveal<HTMLElement>()
+  const { visibleItems: visibleExp, hasMore: hasMoreExp, loadMore: loadMoreExp } = usePagination(EXPERIENCE, EXPERIENCE.length, EXPERIENCE.length, 1)
+  const { visibleItems: visibleCerts, hasMore: hasMoreCerts, loadMore: loadMoreCerts } = usePagination(CERTIFICATIONS, CERTIFICATIONS.length, CERTIFICATIONS.length, 2)
 
   return (
     <section
@@ -10,7 +13,7 @@ export default function About() {
       ref={sectionRef}
       className="relative z-10 bg-[#162C5A] py-16 md:py-24 lg:py-32"
     >
-      <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         {/* Section heading */}
         <h2 className="reveal font-anton text-5xl md:text-6xl lg:text-7xl text-white mb-16 tracking-tight">
           ABOUT
@@ -20,8 +23,8 @@ export default function About() {
         <div className="mb-20">
           <h3 className="reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10">Experience</h3>
           <div className="flex flex-col gap-12">
-            {EXPERIENCE.map((job) => (
-              <div key={job.company} className="reveal flex flex-col md:flex-row gap-4 md:gap-8 group hover:-translate-y-1 transition-all duration-300 p-6 md:p-8 -mx-6 md:-mx-8 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10">
+            {visibleExp.map((job) => (
+              <div key={job.company} className="reveal flex flex-col md:flex-row gap-4 md:gap-8 group hover:-translate-y-1 active:bg-white/5 transition-all duration-300 p-6 md:p-8 -mx-6 md:-mx-8 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 active:border-white/10">
                 <div className="md:w-56 shrink-0">
                   <p className="font-pixel text-base md:text-lg text-brand leading-relaxed group-hover:brightness-125 transition-all duration-300">{job.period}</p>
                 </div>
@@ -39,12 +42,36 @@ export default function About() {
               </div>
             ))}
           </div>
+          {hasMoreExp && (
+            <div className="mt-8 flex justify-center md:hidden">
+              <button
+                onClick={loadMoreExp}
+                className="px-6 py-3 min-h-[44px] border border-white/20 text-white/70 font-pixel text-sm hover:border-white/40 hover:text-white active:border-white/40 active:text-white active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              >
+                VIEW MORE
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Skills */}
         <div className="mb-20">
           <h3 className="reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10">Skills</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          {/* Mobile: one pill per category */}
+          <div className="reveal flex flex-wrap gap-3 md:hidden">
+            {SKILLS.map(({ category, items }) => (
+              <div key={category} className="flex flex-col gap-1 border border-brand/40 bg-white/5 px-4 py-3">
+                <span className="font-pixel text-brand text-xs">{category}</span>
+                <span className="text-white/50 text-xs leading-relaxed">
+                  {items.slice(0, 3).join(' · ')}{items.length > 3 ? ` +${items.length - 3}` : ''}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: full grid with all items */}
+          <div className="hidden md:grid grid-cols-2 gap-8">
             {SKILLS.map(({ category, items }) => (
               <div key={category} className="reveal">
                 <p className="font-pixel text-base md:text-lg text-brand mb-4">{category}</p>
@@ -67,10 +94,10 @@ export default function About() {
         <div>
           <h3 className="reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10">Certifications</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {CERTIFICATIONS.map((cert) => (
+            {visibleCerts.map((cert) => (
               <div
                 key={cert.abbr}
-                className="reveal bg-white/5 border border-white/10 p-6 hover:bg-white/10 hover:border-brand/40 transition-all duration-300 hover:-translate-y-1 group"
+                className="reveal bg-white/5 border border-white/10 p-6 hover:bg-white/10 hover:border-brand/40 active:bg-white/10 active:border-brand/40 transition-all duration-300 hover:-translate-y-1 group"
               >
                 <span className="font-pixel text-base md:text-lg text-brand block mb-4 group-hover:scale-105 origin-left transition-transform duration-300">{cert.abbr}</span>
                 <p className="text-base md:text-lg font-medium text-white leading-snug mb-2 group-hover:text-brand-light transition-colors duration-300">{cert.name}</p>
@@ -82,6 +109,16 @@ export default function About() {
               </div>
             ))}
           </div>
+          {hasMoreCerts && (
+            <div className="mt-8 flex justify-center md:hidden">
+              <button
+                onClick={loadMoreCerts}
+                className="px-6 py-3 min-h-[44px] border border-white/20 text-white/70 font-pixel text-sm hover:border-white/40 hover:text-white active:border-white/40 active:text-white active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              >
+                VIEW MORE
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
