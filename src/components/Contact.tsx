@@ -20,10 +20,10 @@ export default function Contact() {
         </p>
 
         <a
-          href="mailto:rahulkumar@antstack.com"
+          href="mailto:coonect@rahulkmr.com"
           className="reveal bg-brand hover:bg-brand-dark active:bg-brand-dark active:scale-95 text-white font-medium text-base px-10 py-4 rounded-full transition-all duration-200 mb-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg"
         >
-          rahulkumar@antstack.com
+          coonect@rahulkmr.com
         </a>
 
         {/* Social links */}

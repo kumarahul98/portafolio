@@ -1,11 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { useTheme } from './hooks/useTheme'
 import { loadGsap } from './lib/gsap'
 import Canvas from './components/Canvas'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
-import DeferredSections from './components/DeferredSections'
+
+const DeferredSections = lazy(() => import('./components/DeferredSections'))
 
 export default function App() {
   const { dark, toggle } = useTheme()
@@ -124,7 +125,9 @@ export default function App() {
       <main className="relative z-10">
         <Hero />
         <About />
-        <DeferredSections />
+        <Suspense fallback={null}>
+          <DeferredSections />
+        </Suspense>
       </main>
     </div>
   )

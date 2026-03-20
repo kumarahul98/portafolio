@@ -5,7 +5,7 @@ export default function Canvas() {
   const rocketRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (window.innerWidth < 768) return
+    if (!window.matchMedia('(pointer: fine)').matches) return
 
     const canvas = canvasRef.current
     const rocket = rocketRef.current
@@ -106,11 +106,11 @@ export default function Canvas() {
     <>
       <canvas
         ref={canvasRef}
-        className="hidden md:block fixed inset-0 z-30 pointer-events-none opacity-100"
+        className="hidden [@media(pointer:fine)]:block fixed inset-0 z-30 pointer-events-none opacity-100"
       />
       <div
         ref={rocketRef}
-        className="hidden md:block fixed top-0 left-0 z-40 pointer-events-none will-change-transform text-slate-500 transition-[filter,color] duration-150"
+        className="hidden [@media(pointer:fine)]:block fixed top-0 left-0 z-40 pointer-events-none will-change-transform text-slate-500 transition-[filter,color] duration-150"
         aria-hidden="true"
       >
         <svg width="26" height="36" viewBox="0 0 26 36" fill="none" xmlns="http://www.w3.org/2000/svg">
