@@ -69,7 +69,7 @@ export async function printResume() {
   setColor(BLUE)
   doc.textWithLink('www.rahulkmr.com', pageWidth - margin, y - 8, { url: 'https://www.rahulkmr.com', align: 'right' })
   setColor('#444444')
-  doc.text('coonect@rahulkmr.com', pageWidth - margin, y + 4, { align: 'right' })
+  doc.text('connect@rahulkmr.com', pageWidth - margin, y + 4, { align: 'right' })
   y += 22
 
   doc.setFontSize(10)
@@ -131,7 +131,7 @@ export async function printResume() {
   doc.setFont('helvetica', 'normal')
 
   const contacts: Array<{ text: string; url: string }> = [
-    { text: 'coonect@rahulkmr.com', url: 'mailto:coonect@rahulkmr.com' },
+    { text: 'connect@rahulkmr.com', url: 'mailto:connect@rahulkmr.com' },
     { text: 'linkedin.com/in/kumarahul98', url: 'https://www.linkedin.com/in/kumarahul98/' },
     { text: 'github.com/kumarahul98', url: 'https://github.com/kumarahul98' },
   ]
