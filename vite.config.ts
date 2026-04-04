@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import { cloudflare } from "@cloudflare/vite-plugin";
 // Inlines the single app CSS file into a <style> tag to eliminate the render-blocking <link>
 function inlineCss(): Plugin {
   return {
@@ -24,11 +25,11 @@ function inlineCss(): Plugin {
         return html
       },
     },
-  }
+  };
 }
 
 export default defineConfig({
-  plugins: [react(), inlineCss()],
+  plugins: [react(), inlineCss(), cloudflare()],
   server: { host: true },
   build: {
     target: 'es2020',
