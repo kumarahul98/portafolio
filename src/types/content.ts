@@ -1,8 +1,11 @@
-export interface BlogEntry {
+export interface BlogPost {
+  slug: string
   title: string
-  url: string
   date: string
   description?: string
+  tags?: string[]
+  cover?: string
+  html: string
 }
 
 export interface VideoEntry {
@@ -22,7 +25,7 @@ export interface LinkEntry {
 }
 
 export interface ContentFrontmatter {
-  blogs: BlogEntry[]
+  blogs: BlogPost[]
   videos: VideoEntry[]
   links: LinkEntry[]
 }
