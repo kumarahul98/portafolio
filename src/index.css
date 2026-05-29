@@ -120,6 +120,13 @@
     color: var(--c-body);
     font-size: 1.0625rem;
     line-height: 1.75;
+    /* Break long URLs / words so they can't force horizontal page scroll on mobile. */
+    overflow-wrap: break-word;
+  }
+
+  /* Long inline-code tokens (URLs, commands) wrap instead of overflowing. */
+  .prose-blog :not(pre) > code {
+    overflow-wrap: anywhere;
   }
 
   .prose-blog > :first-child {
@@ -242,5 +249,30 @@
     max-width: 100%;
     height: auto;
     border-radius: 6px;
+  }
+
+  /* Tables scroll horizontally within their own box rather than overflowing
+     the page on narrow screens (display:block enables overflow on <table>). */
+  .prose-blog table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.95em;
+  }
+
+  .prose-blog th,
+  .prose-blog td {
+    border: 1px solid var(--c-border);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .prose-blog th {
+    background-color: var(--c-bg-subtle);
+    color: var(--c-heading);
+    font-weight: 600;
   }
 }
