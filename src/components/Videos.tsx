@@ -1,6 +1,7 @@
 import type { VideoEntry } from '../types/content'
 import { useReveal } from '../hooks/useReveal'
-import { usePagination } from '../hooks/usePagination'
+import { Link } from '../lib/router'
+import { getYouTubeId } from '../lib/youtube'
 import { useState, useRef, useEffect } from 'react'
 import SkeletonCard from './ui/SkeletonCard'
 
@@ -9,10 +10,7 @@ interface Props {
   loading: boolean
 }
 
-function getYouTubeId(url: string): string | null {
-  const match = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/)
-  return match ? match[1] : null
-}
+const HOME_LIMIT = 3
 
 function VideoCard({ video, id }: { video: VideoEntry; id: string | null }) {
   const [imgError, setImgError] = useState(false)
@@ -111,8 +109,7 @@ export default function Videos({ data, loading }: Props) {
   const sorted = [...data].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
-
-  const { visibleItems: visibleVideos, hasMore, loadMore } = usePagination(sorted, 6, 6, 2)
+  const latest = sorted.slice(0, HOME_LIMIT)
 
   return (
     <section
@@ -127,28 +124,26 @@ export default function Videos({ data, loading }: Props) {
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} hasImage />)}
+            {Array.from({ length: HOME_LIMIT }).map((_, i) => <SkeletonCard key={i} hasImage />)}
           </div>
         ) : sorted.length === 0 ? (
           <p className="text-base text-app-muted">No videos yet — check back soon.</p>
         ) : (
           <div className="flex flex-col">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {visibleVideos.map((video) => {
+              {latest.map((video) => {
                 const id = getYouTubeId(video.url)
                 return <VideoCard key={video.url + video.title} video={video} id={id} />
               })}
             </div>
-            {hasMore && (
-              <div className="mt-12 flex justify-center">
-                <button
-                  onClick={loadMore}
-                  className="px-6 py-3 min-h-[44px] bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand active:border-brand active:text-brand active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-                >
-                  VIEW MORE
-                </button>
-              </div>
-            )}
+            <div className="mt-12 flex justify-center">
+              <Link
+                to="/videos"
+                className="reveal px-6 py-3 min-h-[44px] inline-flex items-center bg-app-card border border-app-border text-app-heading font-pixel text-sm hover:border-brand hover:text-brand active:border-brand active:text-brand active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+              >
+                VIEW ALL VIDEOS →
+              </Link>
+            </div>
           </div>
         )}
       </div>
