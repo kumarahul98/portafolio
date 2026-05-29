@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import Icon from './ui/Icon'
+import { Link } from '../lib/router'
 import { printResume } from './Resume'
 interface Props {
   dark: boolean
   onToggleTheme: () => void
 }
 
+// Absolute hrefs so section anchors resolve from any route (e.g. /blogs → home).
 const NAV_LINKS = [
-  { label: 'About', href: '#about' },
-  { label: 'Blogs', href: '#blogs' },
-  { label: 'Videos', href: '#videos' },
-  { label: 'Projects', href: '#projects' },
-  { label: "Let's Talk", href: '#contact' },
+  { label: 'About', href: '/#about' },
+  { label: 'Blogs', href: '/#blogs' },
+  { label: 'Videos', href: '/#videos' },
+  { label: 'Projects', href: '/#projects' },
+  { label: "Let's Talk", href: '/#contact' },
 ]
 
 export default function Nav({ dark, onToggleTheme }: Props) {
@@ -27,10 +29,10 @@ export default function Nav({ dark, onToggleTheme }: Props) {
       <div className="absolute inset-0 pointer-events-none z-0" style={{ background: 'linear-gradient(to bottom, var(--c-nav-bg) 85%, transparent 100%)' }} />
       <div className="relative z-10 max-w-7xl mx-auto px-2 md:px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#hero" onClick={close} className="inline-flex items-end gap-1 text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm">
+        <Link to="/" onClick={close} className="inline-flex items-end gap-1 text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm">
           <Icon name="logo" className="block h-10 w-10 shrink-0 translate-y-1" />
           <span className="font-anton text-3xl tracking-wide leading-none pb-[1px]">RK.</span>
-        </a>
+        </Link>
 
         {/* Desktop links + theme toggle */}
         <div className="hidden md:flex items-center gap-8">

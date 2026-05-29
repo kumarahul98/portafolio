@@ -1,9 +1,12 @@
-import { mkdir, readFile, writeFile } from 'fs/promises'
-import { dirname, resolve } from 'path'
+import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
+import { basename, dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
+import fm from 'front-matter'
+import { marked } from 'marked'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const source = resolve(__dirname, '../data/content.md')
+const postsDir = resolve(__dirname, '../data/posts')
 const target = resolve(__dirname, '../src/content/generated.ts')
 
 function parseValue(raw) {
@@ -71,8 +74,41 @@ function parseFrontmatter(raw) {
   return data
 }
 
+// Read every markdown file in data/posts/, parse frontmatter, and convert the
+// body to HTML at build time. Returns a BlogPost[] sorted newest-first.
+async function readPosts() {
+  let files = []
+  try {
+    files = (await readdir(postsDir)).filter((name) => name.endsWith('.md'))
+  } catch {
+    // data/posts/ may not exist yet — emit an empty blog list.
+    return []
+  }
+
+  const posts = await Promise.all(
+    files.map(async (file) => {
+      const raw = await readFile(resolve(postsDir, file), 'utf8')
+      const { attributes, body } = fm(raw)
+
+      return {
+        slug: basename(file, '.md'),
+        title: attributes.title ?? basename(file, '.md'),
+        date: attributes.date ?? '',
+        description: attributes.description ?? '',
+        tags: attributes.tags ?? [],
+        cover: attributes.cover ?? '',
+        html: marked.parse(body, { async: false }),
+      }
+    })
+  )
+
+  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+}
+
 const raw = await readFile(source, 'utf8')
 const contentData = parseFrontmatter(raw)
+// Blogs now come from data/posts/*.md, not content.md.
+contentData.blogs = await readPosts()
 const fileContents = `import type { ContentFrontmatter } from '../types/content'
 
 export const contentData: ContentFrontmatter = ${JSON.stringify(contentData, null, 2)}
