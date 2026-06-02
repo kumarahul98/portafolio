@@ -5,6 +5,14 @@ import { renderToString } from 'react-dom/server'
 import App from '../src/App'
 import { RouterProvider } from '../src/lib/router'
 import { contentData } from '../src/content/generated'
+import { isVideoAvailable } from '../src/lib/videoStatus'
+import {
+  getYouTubeId,
+  youtubeThumb,
+  youtubeEmbed,
+  durationToSeconds,
+  secondsToIso,
+} from '../src/lib/youtube'
 
 const SITE = 'https://www.rahulkmr.com'
 const AUTHOR = 'Rahul Kumar'
@@ -23,6 +31,7 @@ interface Route {
   out: string[]
   meta?: RouteMeta
   post?: (typeof contentData.blogs)[number]
+  videos?: typeof contentData.videos
   lastmod: string
   priority: string
 }
@@ -107,16 +116,78 @@ function articleHead(route: Route) {
   ].join('\n    ')
 }
 
+// VideoObject JSON-LD for each video shown on the /videos page.
+function videosHead(route: Route) {
+  return route
+    .videos!.map((v) => {
+      // Skip deleted/unavailable videos so Search Console doesn't flag dead VideoObjects.
+      if (!isVideoAvailable(v)) return ''
+      const id = getYouTubeId(v.url)
+      if (!id) return ''
+      const seconds = durationToSeconds(v.duration)
+      const video = {
+        '@context': 'https://schema.org',
+        '@type': 'VideoObject',
+        name: v.title,
+        description: v.description || v.title,
+        thumbnailUrl: [youtubeThumb(id)],
+        uploadDate: new Date(v.date).toISOString(),
+        ...(seconds ? { duration: secondsToIso(seconds) } : {}),
+        embedUrl: youtubeEmbed(id),
+        contentUrl: v.url,
+        publisher: {
+          '@type': 'Organization',
+          name: AUTHOR,
+          logo: { '@type': 'ImageObject', url: `${SITE}/favicon.svg` },
+        },
+      }
+      return `<script type="application/ld+json">${jsonLd(video)}</script>`
+    })
+    .filter(Boolean)
+    .join('\n    ')
+}
+
+// <video:video> children for a video sitemap entry (Google video sitemap ext).
+function videoSitemapEntries(videos: typeof contentData.videos) {
+  return videos
+    .map((v) => {
+      // Omit deleted/unavailable videos from the sitemap until they are live again.
+      if (!isVideoAvailable(v)) return ''
+      const id = getYouTubeId(v.url)
+      if (!id) return ''
+      const seconds = durationToSeconds(v.duration)
+      return [
+        '    <video:video>',
+        `      <video:thumbnail_loc>${escapeAttr(youtubeThumb(id))}</video:thumbnail_loc>`,
+        `      <video:title>${escapeAttr(v.title.slice(0, 100))}</video:title>`,
+        `      <video:description>${escapeAttr((v.description || v.title).slice(0, 2048))}</video:description>`,
+        `      <video:player_loc>${escapeAttr(youtubeEmbed(id))}</video:player_loc>`,
+        `      <video:publication_date>${new Date(v.date).toISOString()}</video:publication_date>`,
+        ...(seconds ? [`      <video:duration>${seconds}</video:duration>`] : []),
+        '      <video:platform relationship="allow">web mobile tv</video:platform>',
+        '    </video:video>',
+      ].join('\n')
+    })
+    .filter(Boolean)
+    .join('\n')
+}
+
 function buildSitemap(routes: Route[]) {
   const urls = routes
-    .map(
-      (r) =>
+    .map((r) => {
+      const videos = r.videos?.length ? `\n${videoSitemapEntries(r.videos)}` : ''
+      return (
         `  <url>\n    <loc>${SITE}${r.path === '/' ? '/' : r.path}</loc>\n` +
         `    <lastmod>${r.lastmod}</lastmod>\n    <changefreq>weekly</changefreq>\n` +
-        `    <priority>${r.priority}</priority>\n  </url>`
-    )
+        `    <priority>${r.priority}</priority>${videos}\n  </url>`
+      )
+    })
     .join('\n')
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
+  return (
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ` +
+    `xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n${urls}\n</urlset>\n`
+  )
 }
 
 async function main() {
@@ -136,6 +207,19 @@ async function main() {
         description:
           'Articles and writings by Rahul Kumar on AWS, serverless, data engineering, and GenAI.',
         url: `${SITE}/blogs`,
+      },
+    },
+    {
+      path: '/videos',
+      out: ['videos', 'index.html'],
+      lastmod: today,
+      priority: '0.8',
+      videos: contentData.videos,
+      meta: {
+        title: 'Talks & Videos — Rahul Kumar',
+        description:
+          'Talks, conference sessions, and videos by Rahul Kumar on AWS, serverless, data engineering, and GenAI.',
+        url: `${SITE}/videos`,
       },
     },
     ...contentData.blogs.map((post) => ({
@@ -164,6 +248,7 @@ async function main() {
     let html = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`)
     if (route.meta) html = applyMeta(html, route.meta)
     if (route.post) html = html.replace('</head>', `    ${articleHead(route)}\n  </head>`)
+    if (route.videos) html = html.replace('</head>', `    ${videosHead(route)}\n  </head>`)
 
     const outPath = resolve(distDir, ...route.out)
     await mkdir(dirname(outPath), { recursive: true })

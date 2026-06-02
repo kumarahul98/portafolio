@@ -20,10 +20,17 @@ export interface Certification {
 
 export const EXPERIENCE: Experience[] = [
   {
+    company: 'HashedIn by Deloitte',
+    location: 'Bengaluru',
+    role: 'Software Engineer 3',
+    period: 'Jun 2026 – Present',
+    bullets: [],
+  },
+  {
     company: 'AntStack Technologies',
     location: 'Bangalore',
     role: 'Principal Solutions Architect',
-    period: 'Jul 2021 – Present',
+    period: 'Jul 2021 – Jun 2026',
     bullets: [
       'Lead teams across projects, drive architectural decisions, and help organizations modernize with serverless and AI-powered solutions.',
       'Built and shipped full-stack serverless applications using AWS Lambda, API Gateway, Amplify, and DynamoDB across multiple client projects.',

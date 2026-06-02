@@ -13,6 +13,8 @@ function parseValue(raw) {
   const value = raw.trim()
 
   if (value === '[]') return []
+  if (value === 'true') return true
+  if (value === 'false') return false
   if (value.startsWith('"') && value.endsWith('"')) {
     return JSON.parse(value)
   }

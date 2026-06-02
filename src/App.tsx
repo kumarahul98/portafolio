@@ -7,6 +7,7 @@ import Nav from './components/Nav'
 import HomePage from './pages/HomePage'
 import BlogsPage from './pages/BlogsPage'
 import BlogPostPage from './pages/BlogPostPage'
+import VideosPage from './pages/VideosPage'
 
 function cleanPath(path: string) {
   return path.replace(/\/+$/, '') || '/'
@@ -23,6 +24,7 @@ function renderRoute(path: string) {
   if (clean.startsWith('/blogs/')) {
     return <BlogPostPage slug={decodeURIComponent(clean.slice('/blogs/'.length))} />
   }
+  if (clean === '/videos') return <VideosPage />
   return <HomePage />
 }
 

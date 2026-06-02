@@ -27,8 +27,11 @@ Certified AWS Solutions Architect with DevOps expertise, passionate about scalab
 
 ## Professional Experience
 
+### HashedIn by Deloitte, Bengaluru — Software Engineer 3
+**June 2026 – Present** · Full-time · Hybrid
+
 ### AntStack Technologies, Bangalore — Principal Solutions Architect (Member of Technical Staff)
-**July 2021 – Present**
+**July 2021 – June 2026**
 
 Currently working as Principal Solutions Architect, leading teams across projects, driving architectural decisions, and helping organizations modernize with serverless and AI-powered solutions. Built and shipped full-stack serverless applications using AWS Lambda, API Gateway, Amplify, and DynamoDB across multiple client projects. Designed and implemented data pipelines on AWS using Glue, Athena, and S3. Built production-ready data analytics pipelines on Databricks.
 
