@@ -15,6 +15,8 @@ export interface VideoEntry {
   description?: string
   duration?: string
   views?: string
+  /** Set to false while a video is deleted/being restored — hides embed + link. */
+  available?: boolean
 }
 
 export interface LinkEntry {

@@ -5,6 +5,7 @@ import { renderToString } from 'react-dom/server'
 import App from '../src/App'
 import { RouterProvider } from '../src/lib/router'
 import { contentData } from '../src/content/generated'
+import { isVideoAvailable } from '../src/lib/videoStatus'
 import {
   getYouTubeId,
   youtubeThumb,
@@ -119,6 +120,8 @@ function articleHead(route: Route) {
 function videosHead(route: Route) {
   return route
     .videos!.map((v) => {
+      // Skip deleted/unavailable videos so Search Console doesn't flag dead VideoObjects.
+      if (!isVideoAvailable(v)) return ''
       const id = getYouTubeId(v.url)
       if (!id) return ''
       const seconds = durationToSeconds(v.duration)
@@ -148,6 +151,8 @@ function videosHead(route: Route) {
 function videoSitemapEntries(videos: typeof contentData.videos) {
   return videos
     .map((v) => {
+      // Omit deleted/unavailable videos from the sitemap until they are live again.
+      if (!isVideoAvailable(v)) return ''
       const id = getYouTubeId(v.url)
       if (!id) return ''
       const seconds = durationToSeconds(v.duration)
