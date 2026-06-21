@@ -14,7 +14,7 @@ import {
   secondsToIso,
 } from '../src/lib/youtube'
 
-const SITE = 'https://www.rahulkmr.com'
+const SITE = 'https://rahulkmr.com'
 const AUTHOR = 'Rahul Kumar'
 const DEFAULT_IMAGE = `${SITE}/herosection.webp`
 

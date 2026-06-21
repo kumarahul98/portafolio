@@ -67,7 +67,7 @@ export async function printResume() {
   doc.setFontSize(9)
   doc.setFont('helvetica', 'normal')
   setColor(BLUE)
-  doc.textWithLink('www.rahulkmr.com', pageWidth - margin, y - 8, { url: 'https://www.rahulkmr.com', align: 'right' })
+  doc.textWithLink('rahulkmr.com', pageWidth - margin, y - 8, { url: 'https://rahulkmr.com', align: 'right' })
   setColor('#444444')
   doc.text('connect@rahulkmr.com', pageWidth - margin, y + 4, { align: 'right' })
   y += 22

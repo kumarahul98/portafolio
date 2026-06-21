@@ -5,13 +5,13 @@ Goal: make `rahulkmr.com` the strongest web entity for your specific identity, n
 ## Phase 1: Technical Baseline
 
 1. Verify `rahulkmr.com` in Google Search Console.
-2. Submit `https://www.rahulkmr.com/sitemap.xml`.
+2. Submit `https://rahulkmr.com/sitemap.xml`.
 3. Inspect and request indexing for:
    - homepage
    - any new about page
    - any new talks/blog pages
 4. Confirm only one canonical host is indexed:
-   - `https://www.rahulkmr.com/`
+   - `https://rahulkmr.com/`
    - redirect all non-canonical variants if needed
 5. Recheck `robots.txt`, `sitemap.xml`, canonical tags, and status codes after deploys.
 6. Add Bing Webmaster Tools as a secondary index source.

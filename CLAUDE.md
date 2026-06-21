@@ -138,3 +138,8 @@ Tell the user which task was completed and what was done. Do not proceed to the 
 - Do not make section backgrounds fully opaque (breaks canvas glow)
 - Do not use `front-matter` v5+ (breaks in the browser)
 - Do not add `@keyframes` to CSS — GSAP handles all motion
+
+## Model Policy & Workflow
+- **Planning Phase**: Always use `Claude Sonnet 4.6 (Thinking)` for architectural decisions, task planning, and layout design.
+- **Implementation Phase**: Always use `Gemini 3.5 Flash (High)` for code generation, edits, running CLI commands, and test verification.
+
