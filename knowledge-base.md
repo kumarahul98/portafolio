@@ -93,11 +93,12 @@ Search Application to query records with millisecond latency. Architected an eff
 
 ## Certifications
 
-1. **AWS Certified Solutions Architect – Professional** (Issued Apr 2025, Expires Apr 2028)
-2. **AWS Certified Solutions Architect – Associate** (Issued Jan 2025, Expires Apr 2028)
-3. **Databricks Certified Associate Developer for Apache Spark 3.0**
-4. **AWS Certified Data Analytics – Specialty**
-5. **Amazon Web Services Cloud Practitioner**
+1. **Claude Certified Architect – Professional** (Issued Aug 2026, Expires Aug 2027) — [Credly Verification](https://www.credly.com/badges/9bea6941-a9ed-4d3e-8ee6-7abeccf297fd/)
+2. **AWS Certified Solutions Architect – Professional** (Issued Apr 2025, Expires Apr 2028)
+3. **AWS Certified Solutions Architect – Associate** (Issued Jan 2025, Expires Apr 2028)
+4. **Databricks Certified Associate Developer for Apache Spark 3.0**
+5. **AWS Certified Data Analytics – Specialty**
+6. **Amazon Web Services Cloud Practitioner**
 
 ---
 

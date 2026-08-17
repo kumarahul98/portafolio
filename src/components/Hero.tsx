@@ -119,8 +119,8 @@ export default function Hero() {
             ref={bioRef}
             className="text-white/70 text-base md:text-lg max-w-md mb-12 leading-relaxed font-light"
           >
-            Builds and ships scalable, cloud-native solutions on AWS. Work spans
-            serverless architecture, DevOps, full-stack development, and GenAI.
+            Builds and ships scalable, cloud-native AI solutions on AWS. Work spans
+            GenAI, serverless architecture, DevOps, and full-stack development.
             Active speaker at AWS community events and host on AntStack TV.
           </p>
 

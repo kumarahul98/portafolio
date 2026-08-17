@@ -94,20 +94,51 @@ export default function About() {
         <div>
           <h3 className="reveal font-pixel text-xl md:text-2xl text-[#9CA3B0] mb-10">Certifications</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {visibleCerts.map((cert) => (
-              <div
-                key={cert.abbr}
-                className="reveal bg-white/5 border border-white/10 p-6 hover:bg-white/10 hover:border-brand/40 active:bg-white/10 active:border-brand/40 transition-all duration-300 hover:-translate-y-1 group"
-              >
-                <span className="font-pixel text-base md:text-lg text-brand block mb-4 group-hover:scale-105 origin-left transition-transform duration-300">{cert.abbr}</span>
-                <p className="text-base md:text-lg font-medium text-white leading-snug mb-2 group-hover:text-brand-light transition-colors duration-300">{cert.name}</p>
-                {cert.issued && (
-                  <p className="text-sm md:text-base text-[#9CA3B0]">
-                    Issued {cert.issued}{cert.expires ? ` · Expires ${cert.expires}` : ''}
-                  </p>
-                )}
-              </div>
-            ))}
+            {visibleCerts.map((cert) => {
+              const CardContent = (
+                <>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="font-pixel text-base md:text-lg text-brand group-hover:scale-105 origin-left transition-transform duration-300">{cert.abbr}</span>
+                      {cert.issuer && (
+                        <span className="text-xs font-mono uppercase bg-brand/10 border border-brand/30 text-brand px-2 py-0.5 rounded">
+                          {cert.issuer}
+                        </span>
+                      )}
+                    </div>
+                    {cert.url && (
+                      <svg className="w-4 h-4 text-white/50 group-hover:text-brand transition-colors duration-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    )}
+                  </div>
+                  <p className="text-base md:text-lg font-medium text-white leading-snug mb-2 group-hover:text-brand-light transition-colors duration-300">{cert.name}</p>
+                  {cert.issued && (
+                    <p className="text-sm md:text-base text-[#9CA3B0]">
+                      Issued {cert.issued}{cert.expires ? ` · Expires ${cert.expires}` : ''}
+                    </p>
+                  )}
+                </>
+              )
+
+              const cardClasses = "reveal bg-white/5 border border-white/10 p-6 hover:bg-white/10 hover:border-brand/40 active:bg-white/10 active:border-brand/40 transition-all duration-300 hover:-translate-y-1 group block text-left"
+
+              return cert.url ? (
+                <a
+                  key={cert.abbr}
+                  href={cert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cardClasses}
+                >
+                  {CardContent}
+                </a>
+              ) : (
+                <div key={cert.abbr} className={cardClasses}>
+                  {CardContent}
+                </div>
+              )
+            })}
           </div>
           {hasMoreCerts && (
             <div className="mt-8 flex justify-center md:hidden">

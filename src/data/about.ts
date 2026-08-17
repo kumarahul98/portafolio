@@ -16,6 +16,8 @@ export interface Certification {
   abbr: string
   issued: string | null
   expires: string | null
+  issuer?: string
+  url?: string
 }
 
 export const EXPERIENCE: Experience[] = [
@@ -78,9 +80,18 @@ export const SKILLS: SkillCategory[] = [
 ]
 
 export const CERTIFICATIONS: Certification[] = [
+  {
+    name: 'Claude Certified Architect – Professional',
+    abbr: 'CCA-P',
+    issued: 'Aug 2026',
+    expires: 'Aug 2027',
+    issuer: 'Anthropic',
+    url: 'https://www.credly.com/badges/9bea6941-a9ed-4d3e-8ee6-7abeccf297fd/',
+  },
   { name: 'AWS Certified Solutions Architect – Professional', abbr: 'SAP', issued: 'Apr 2025', expires: 'Apr 2028' },
   { name: 'AWS Certified Solutions Architect – Associate', abbr: 'SAA', issued: 'Jan 2025', expires: 'Apr 2028' },
   { name: 'AWS Certified Data Analytics – Specialty', abbr: 'DAS', issued: null, expires: null },
   { name: 'Amazon Web Services Cloud Practitioner', abbr: 'CCP', issued: null, expires: null },
   { name: 'Databricks Certified Associate Developer for Apache Spark 3.0', abbr: 'DBX', issued: null, expires: null },
 ]
+
