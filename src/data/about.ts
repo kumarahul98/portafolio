@@ -24,9 +24,12 @@ export const EXPERIENCE: Experience[] = [
   {
     company: 'HashedIn by Deloitte',
     location: 'Bengaluru',
-    role: 'Software Engineer 3',
+    role: 'Software Engineer 3 — Forward Deployed Engineer',
     period: 'Jun 2026 – Present',
-    bullets: [],
+    bullets: [
+      'Work as a Forward Deployed Engineer, embedded with fintech and healthcare clients to design, build and ship solutions in their environments.',
+      'Work directly with client stakeholders to turn business needs into production-ready cloud and GenAI systems.',
+    ],
   },
   {
     company: 'AntStack Technologies',

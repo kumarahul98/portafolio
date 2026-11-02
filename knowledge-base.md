@@ -3,7 +3,7 @@
 ## Personal Summary
 
 **Name:** Rahul Kumar
-**Title:** Principal Solutions Architect at AntStack
+**Title:** Software Engineer 3 — Forward Deployed Engineer at HashedIn by Deloitte
 **Location:** Bengaluru, Karnataka, India
 **Email:** rahulkumar@antstack.com
 **LinkedIn:** [linkedin.com/in/kumarahul98](https://www.linkedin.com/in/kumarahul98/)
@@ -27,8 +27,10 @@ Certified AWS Solutions Architect with DevOps expertise, passionate about scalab
 
 ## Professional Experience
 
-### HashedIn by Deloitte, Bengaluru — Software Engineer 3
+### HashedIn by Deloitte, Bengaluru — Software Engineer 3 (Forward Deployed Engineer)
 **June 2026 – Present** · Full-time · Hybrid
+
+Works as a Forward Deployed Engineer with fintech and healthcare clients.
 
 ### AntStack Technologies, Bangalore — Principal Solutions Architect (Member of Technical Staff)
 **July 2021 – June 2026**

@@ -103,7 +103,7 @@ export default function Hero() {
             ref={labelRef}
             className="font-pixel text-xs sm:text-sm text-brand tracking-[0.18em] uppercase mb-6 opacity-90"
           >
-            Principal Solutions Architect
+            Forward Deployed Engineer
           </span>
 
           <h1
