@@ -3,6 +3,7 @@ import { loadGsap } from '../lib/gsap'
 
 export default function Hero() {
   const headingRef = useRef<HTMLHeadingElement>(null)
+  const badgeRef = useRef<HTMLAnchorElement>(null)
   const labelRef = useRef<HTMLSpanElement>(null)
   const bioRef = useRef<HTMLParagraphElement>(null)
   const btnsRef = useRef<HTMLDivElement>(null)
@@ -21,6 +22,11 @@ export default function Hero() {
           headingRef.current,
           { y: 80, opacity: 0 },
           { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }
+        )
+        gsap.fromTo(
+          badgeRef.current,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, delay: 0.1, ease: 'power3.out' }
         )
         gsap.fromTo(
           labelRef.current,
@@ -99,6 +105,15 @@ export default function Hero() {
 
         {/* Content — pt-24 clears the fixed nav */}
         <div className="relative z-10 flex flex-col items-start max-w-2xl px-8 md:px-16 pt-24 pb-16">
+          <a
+            ref={badgeRef}
+            href="#contact"
+            className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-white/90 hover:border-brand hover:text-white transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+          >
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-green-500" />
+            <span className="font-pixel text-[0.6rem] uppercase tracking-[0.15em]">Open to new opportunities</span>
+          </a>
+
           <span
             ref={labelRef}
             className="font-pixel text-xs sm:text-sm text-brand tracking-[0.18em] uppercase mb-6 opacity-90"

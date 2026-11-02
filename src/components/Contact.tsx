@@ -16,7 +16,7 @@ export default function Contact() {
         </h2>
 
         <p className="reveal text-app-body text-lg md:text-xl max-w-lg mb-12">
-          Open to collaborations, speaking opportunities, and consulting.
+          Open to new full-time roles, collaborations, speaking opportunities, and consulting.
         </p>
 
         <a
