@@ -75,7 +75,7 @@ export async function printResume() {
   doc.setFontSize(10)
   doc.setFont('helvetica', 'normal')
   setColor('#444444')
-  doc.text('Principal Solutions Architect', margin, y)
+  doc.text('Forward Deployed Engineer · HashedIn by Deloitte', margin, y)
   y += 14
 
   setDraw('#cccccc')
