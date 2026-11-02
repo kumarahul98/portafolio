@@ -1,5 +1,3 @@
 {
-  "planModel": "Claude Sonnet 4.6 (Thinking)",
-  "executeModel": "Gemini 3.5 Flash (High)",
-  "model": "Gemini 3.5 Flash (High)"
+  "model": "claude-sonnet-5"
 }
